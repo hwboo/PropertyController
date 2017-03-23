@@ -7,7 +7,8 @@ import reducer from "../ui/reducers/Reducers";
 import Log from "../utils/Log";
 import {getComponentName} from "../utils/Util";
 import Root from "../ui/Root";
-import MainLayer from "../ui/containers/layer/MainLayer";
+import MainLayer from "../ui/main/layers/MainLayer";
+import TestLayer from "../ui/test/layers/TestLayer";
 import {addLayer, removeLayer, addView, removeView, setFocusView, addPopup, removePopup} from "../ui/actions/ActionUI";
 
 /**
@@ -38,6 +39,7 @@ class UIManager {
         window.focus();
         this.store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
         this.addLayer(MainLayer);
+        this.addLayer(TestLayer);
         this._render();
         document.addEventListener("keydown", this.handleKeyEvent);
     }

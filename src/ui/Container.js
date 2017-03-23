@@ -1,7 +1,7 @@
 "use strict";
 import React, {Component, PropTypes} from "react";
-import Log from '../../utils/Log';
-import UIManager from "../../manager/UIManager";
+import Log from '../utils/Log';
+import UIManager from "../manager/UIManager";
 
 /**
  * @fileoverview
@@ -11,7 +11,7 @@ import UIManager from "../../manager/UIManager";
  */
 const TYPE = {
     LAYER: "LAYER",
-    VIEW : "VIEW",
+    VIEW: "VIEW",
     POPUP: "POPUP"
 };
 class Container extends Component {

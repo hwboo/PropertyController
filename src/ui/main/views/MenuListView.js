@@ -2,9 +2,9 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import Key from "../../../common/KeyDef";
-import View from './View';
+import View from '../../View';
 import {setListInfo, setFocus, upList, downList} from "../../actions/ActionMenuList";
-import Menu from "../../components/Menu";
+import Menu from "../comps/Menu";
 
 /**
  * @fileoverview
@@ -54,7 +54,7 @@ class MenuListView extends View {
         } else if (key_code === Key.RIGHT) {
             this.props.setFocus(false);
             this.callback({
-                id : this.id
+                id: this.id
             });
             return true;
         }

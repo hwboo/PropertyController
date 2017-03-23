@@ -1,6 +1,6 @@
 "use strict";
 import React, {Component, PropTypes} from "react";
-import View from './View';
+import View from '../../View';
 /**
  * @fileoverview
  * @author hw.boo on 2017-03-20.

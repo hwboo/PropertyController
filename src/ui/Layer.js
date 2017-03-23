@@ -1,7 +1,7 @@
 "use strict";
 import React, {Component, PropTypes} from "react";
-import Container from "../Container";
-import UIManager from '../../../manager/UIManager'
+import Container from "./Container";
+import UIManager from '../manager/UIManager'
 
 /**
  * @fileoverview

@@ -1,9 +1,9 @@
 "use strict";
 import React, {PropTypes} from "react";
-import Layer from './Layer';
+import Layer from '../../Layer';
 import Key from '../../../common/KeyDef';
-import TestPopup from '../popup/TestPopup'
-import TestView from '../view/TestView';
+import TestPopup from '../popups/TestPopup'
+import TestView from '../views/TestView';
 
 /**
  * @fileoverview
@@ -25,6 +25,7 @@ class TestLayer extends Layer {
         this.addPopup(TestPopup);
 
     }
+
     render() {
         return (
             <div>

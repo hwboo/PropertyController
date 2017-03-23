@@ -1,10 +1,10 @@
 "use strict";
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
-import Layer from "./Layer";
+import Layer from "../../Layer";
 import Key from "../../../common/KeyDef";
 import DataManager from "../../../manager/DataManager";
-import MenuListView from "../view/MenuListView";
+import MenuListView from "../views/MenuListView";
 
 /**
  * @fileoverview
@@ -33,7 +33,7 @@ class MainLayer extends Layer {
 
     notifyFromView(data) {
         this.printLog("called notifyFromView() - data :" + data);
-        if(this.menu_list_id === data.id) {
+        if (this.menu_list_id === data.id) {
             this.setFocusView(data.id, false);
         }
     }

@@ -1,6 +1,6 @@
 "use strict";
 import React, {Component, PropTypes} from "react";
-import Popup from './Popup';
+import Popup from '../../Popup';
 import Key from '../../../common/KeyDef';
 
 /**
