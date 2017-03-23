@@ -39,7 +39,6 @@ class UIManager {
         window.focus();
         this.store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
         this.addLayer(MainLayer);
-        this.addLayer(TestLayer);
         this._render();
         document.addEventListener("keydown", this.handleKeyEvent);
     }
