@@ -1,0 +1,48 @@
+목적
+- 설치가 필요한 환경 설정에 대해 가이드한다.
+
+1. Node 설치
+- 설치가 안되어 있는 경우 아래의 사이트에 접속하여 설치
+- https://nodejs.org/ko/
+
+2. Webpack
+- 글로벌에 webpack 설치 (이미 설치했다면 패스)
+=> npm install -g webpack webpack-dev-server
+- 프로젝트에도 webpack,webpack-dev-server 설치
+=> npm install --save-dev webpack
+
+3. Webpack dev server
+- 글로벌에 webpack-dev-server 설치하기 (이미 설치했다면 패스)
+=> npm install -g webpack-dev-server
+- 프로젝트에도 webpack, webpack-dev-server 설치
+=> npm install --save-dev webpack-dev-server
+
+4. Yarn
+- package.json를 참고하여 의존 모듈 설치해줌
+=> npm install -g yarn (이미 설치했다면 패스)
+- 해당 폴더에서 yarn 명령어 실행
+- 안될 경우 5, 6번 설치
+
+5. Plugin
+1) html-webpack-plugin
+- HTML 페이지 생성 or 기존의 것을 그대로 사용할 수 있음
+=> npm install --save-dev html-webpack-plugin
+
+
+6. Loader
+1) babel
+- ES6 문법을 ES5로 변환
+=> npm install --save-dev babel-core babel-loader babel-preset-es2015
+
+2) 스타일 시트
+- 스타일시트를 처리하는 css-loader 와 style-loader
+=> npm install --save-dev style-loader css-loader
+
+3) React
+- UI library
+=> npm install --save-dev react react-dom babel-preset-react
+- Router
+=> npm install --save-dev react-router
+- Redux
+=> npm install --save-dev redux
+=> npm install --save-dev react-redux

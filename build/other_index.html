@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Other App</title>
+    <script src="../libs/jquery.min.js" charset="utf-8"></script>
+    <script>
+        var iframe = null;
+        function processMain() {
+            console.log("called processMain()");
+            //iframe 생성
+            iframe = document.createElement("iframe");
+            iframe.setAttribute("id", "PropertyController");
+            iframe.src = "./index.html";
+            iframe.width = 500;
+            iframe.height = 500;
+            document.getElementsByTagName("body")[0].appendChild(iframe);
+            iframe.onload = function () {
+                PC = iframe.contentWindow.PC;
+                PC.Interface.init();
+            }
+        }
+    </script>
+</head>
+<body>
+<h1 onclick="processMain()">Main</h1>
+<script>
+    $("body").on("keydown", function (event) {
+        console.log("Main keydown : " + event);
+    });
+</script>
+</body>
+</html>

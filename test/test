@@ -1,0 +1,14 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import config from '../../config.json';
+import Greeter from './Greeter'
+
+
+var a = 10;
+var PC = PC || {};
+console.log(config.VERSION);
+ReactDOM.render(<Greeter/>, document.getElementById('root'));
+function init(data, callback) {
+    console.log("called init()");
+}
