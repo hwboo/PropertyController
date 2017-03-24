@@ -27,7 +27,8 @@ class DataManager {
         let result = false;
         try {
             for (let key in data) {
-                let temp = data[key];
+                let temp = Object.assign({}, data[key], {'PROPERTY' : key});
+
                 Log.printLog(this.log_tag, "init() - key : " + key + ", value : " + JSON.stringify(temp));
                 if (!temp.CATEGORY || !temp.TYPE || temp.VALUE === undefined || temp.VALUE === null || !temp.USE) {
                     continue;
