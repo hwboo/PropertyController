@@ -6,6 +6,7 @@ export const REMOVE_LAYER = "REMOVE_LAYER";
 export const ADD_VIEW = "ADD_VIEW";
 export const REMOVE_VIEW = "REMOVE_VIEW";
 export const SET_FOCUS_VIEW = "SET_FOCUS_VIEW";
+export const UPDATE_VEW = "UPDATE_VEW";
 
 export const ADD_POPUP = "PUSH_POPUP";
 export const REMOVE_POPUP = "POP_POPUP";
@@ -61,6 +62,17 @@ export function setFocusView(layer_id, view_id, is_focus) {
             layer_id: layer_id,
             view_id: view_id,
             is_focus: is_focus
+        }
+    }
+}
+
+export function updateView(layer_id, view_id, data) {
+    return {
+        type : UPDATE_VEW,
+        payload : {
+            layer_id: layer_id,
+            view_id: view_id,
+            data: data
         }
     }
 }

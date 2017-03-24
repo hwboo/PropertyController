@@ -9,7 +9,7 @@ import {getComponentName} from "../utils/Util";
 import Root from "../ui/Root";
 import MainLayer from "../ui/main/layers/MainLayer";
 import TestLayer from "../ui/test/layers/TestLayer";
-import {addLayer, removeLayer, addView, removeView, setFocusView, addPopup, removePopup} from "../ui/actions/ActionUI";
+import {addLayer, removeLayer, addView, removeView, setFocusView, updateView, addPopup, removePopup} from "../ui/actions/ActionUI";
 
 /**
  * @fileoverview
@@ -125,6 +125,11 @@ class UIManager {
     setFocusView(layer_id, view_id, is_focus) {
         Log.printLog(this.log_tag, "called setFocusView() - layer_id : " + layer_id + ", view_id : " + view_id + ", is_focus : " + is_focus);
         this.store.dispatch(setFocusView(layer_id, view_id, is_focus));
+    }
+
+    updateView(layer_id, view_id, data) {
+        Log.printLog(this.log_tag, "called updateView() - layer_id : " + layer_id + ", view_id : " + view_id + ", data : " + data);
+        this.store.dispatch(updateView(layer_id, view_id, data));
     }
 
     getPopup(popup_info) {

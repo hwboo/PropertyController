@@ -5,6 +5,7 @@ import {
     ADD_VIEW,
     REMOVE_VIEW,
     SET_FOCUS_VIEW,
+    UPDATE_VEW,
     ADD_POPUP,
     REMOVE_POPUP
 } from '../actions/ActionUI';
@@ -73,6 +74,14 @@ export default function (state = [], action) {
             layer_index = getIndex(action.payload.layer_id, state);
             if (layer_index !== -1) {
                 state[layer_index].views[action.payload.view_id].is_focus = action.payload.is_focus;
+                return [...state];
+            } else {
+                return state;
+            }
+        case UPDATE_VEW :
+            layer_index = getIndex(action.payload.layer_id, state);
+            if (layer_index !== -1) {
+                state[layer_index].views[action.payload.view_id].data = action.payload.data;
                 return [...state];
             } else {
                 return state;

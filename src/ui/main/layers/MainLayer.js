@@ -33,8 +33,14 @@ class MainLayer extends Layer {
 
     notifyFromView(data) {
         this.printLog("called notifyFromView() - data :" + data);
-        if (this.menu_list_id === data.id) {
-            this.setFocusView(data.id, false);
+        if (this.menu_list_id === data.view_id) {
+            let type = data.type;
+            this.printLog("notifyFromView() - type :" + type);
+            if(MenuListView.TYPE.UNFOCUS === type) {
+                this.setFocusView(data.view_id, false);
+            } else if(MenuListView.TYPE.CHANGE_FOCUS === type) {
+                this.updateView();
+            }
         }
     }
 

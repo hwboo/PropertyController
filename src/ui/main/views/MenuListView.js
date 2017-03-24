@@ -12,6 +12,10 @@ import Menu from "../comps/Menu";
  * @version
  * <p>Copyright (c) 1997-2015 Alticast, Inc. All rights reserved.
  */
+const TYPE = {
+    UNFOCUS: "UNFOCUS",
+    CHANGE_FOCUS: "CHANGE_FOCUS"
+};
 class MenuListView extends View {
     componentWillMount() {
         super.componentWillMount();
@@ -47,17 +51,32 @@ class MenuListView extends View {
         let key_code = event.keyCode;
         if (key_code === Key.UP) {
             this.props.upList();
+            this.callback({
+                type: TYPE.CHANGE_FOCUS,
+                view_id: this.id,
+                focused_Index: this.props.list_info.focused_Index
+            });
             return true;
         } else if (key_code === Key.DOWN) {
             this.props.downList();
+            this.callback({
+                type: TYPE.CHANGE_FOCUS,
+                view_id: this.id,
+                focused_Index: this.props.list_info.focused_Index
+            });
             return true;
         } else if (key_code === Key.RIGHT) {
             this.props.setFocus(false);
             this.callback({
-                id: this.id
+                type: TYPE.UNFOCUS,
+                view_id: this.id
             });
             return true;
         }
+    }
+
+    static get TYPE() {
+        return TYPE;
     }
 }
 

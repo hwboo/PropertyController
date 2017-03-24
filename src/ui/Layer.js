@@ -37,6 +37,10 @@ class Layer extends Container {
         UIManager.setFocusView(this.id, view_id, is_focus);
     }
 
+    updateView(view_id, data) {
+        UIManager.updateView(this.id, view_id, data);
+    }
+
     notifyFromView() {
     }
 
