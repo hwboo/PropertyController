@@ -46,3 +46,9 @@
 - Redux
 => npm install --save-dev redux
 => npm install --save-dev react-redux
+
+7. 실행
+- 개발 서버
+=> npm run dev-server
+- 개발 빌드
+=> npm run dev-build
