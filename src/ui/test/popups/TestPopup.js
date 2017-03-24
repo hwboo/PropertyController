@@ -1,7 +1,7 @@
 "use strict";
 import React, {Component, PropTypes} from "react";
 import Popup from '../../Popup';
-import Key from '../../../common/KeyDef';
+import KEY from '../../../common/KeyDef';
 
 /**
  * @fileoverview
@@ -25,7 +25,7 @@ class TestPopup extends Popup {
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
-        if (key_code === Key.UP) {
+        if (key_code === KEY.UP) {
             this.callback();
             return true;
         }

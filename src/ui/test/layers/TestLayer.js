@@ -1,7 +1,7 @@
 "use strict";
 import React, {PropTypes} from "react";
 import Layer from '../../Layer';
-import Key from '../../../common/KeyDef';
+import KEY from '../../../common/KeyDef';
 import TestPopup from '../popups/TestPopup'
 import TestView from '../views/TestView';
 
@@ -37,10 +37,10 @@ class TestLayer extends Layer {
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() key_code : " + event.keyCode);
         let key_code = event.keyCode;
-        if (key_code === Key.UP) {
-        } else if (key_code === Key.DOWN) {
+        if (key_code === KEY.UP) {
+        } else if (key_code === KEY.DOWN) {
             // this.props.downList();
-        } else if (key_code === Key.RIGHT) {
+        } else if (key_code === KEY.RIGHT) {
             // this.props.unfocusList();
             this.setFocusView(this.view_id, true);
         }

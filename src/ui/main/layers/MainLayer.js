@@ -2,7 +2,7 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import Layer from "../../Layer";
-import Key from "../../../common/KeyDef";
+import KEY from "../../../common/KeyDef";
 import DataManager from "../../../manager/DataManager";
 import MenuListView from "../views/MenuListView";
 
@@ -47,7 +47,7 @@ class MainLayer extends Layer {
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
-        if (key_code === Key.RIGHT) {
+        if (key_code === KEY.RIGHT) {
         }
         return false;
     }

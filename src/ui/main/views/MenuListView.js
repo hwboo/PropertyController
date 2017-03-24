@@ -1,7 +1,7 @@
 "use strict";
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
-import Key from "../../../common/KeyDef";
+import KEY from "../../../common/KeyDef";
 import View from '../../View';
 import {setListInfo, setFocus, upList, downList} from "../../actions/ActionMenuList";
 import Menu from "../comps/Menu";
@@ -49,7 +49,7 @@ class MenuListView extends View {
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
-        if (key_code === Key.UP) {
+        if (key_code === KEY.UP) {
             this.props.upList();
             this.callback({
                 type: TYPE.CHANGE_FOCUS,
@@ -57,7 +57,7 @@ class MenuListView extends View {
                 focused_Index: this.props.list_info.focused_Index
             });
             return true;
-        } else if (key_code === Key.DOWN) {
+        } else if (key_code === KEY.DOWN) {
             this.props.downList();
             this.callback({
                 type: TYPE.CHANGE_FOCUS,
@@ -65,7 +65,7 @@ class MenuListView extends View {
                 focused_Index: this.props.list_info.focused_Index
             });
             return true;
-        } else if (key_code === Key.RIGHT) {
+        } else if (key_code === KEY.RIGHT) {
             this.props.setFocus(false);
             this.callback({
                 type: TYPE.UNFOCUS,
