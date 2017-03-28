@@ -20,6 +20,7 @@ class View extends Container {
     shouldComponentUpdate(nextProps, nextState) {
         super.shouldComponentUpdate(nextProps, nextState);
         this.is_focus = nextProps.is_focus;
+        return false;
     }
 }
 

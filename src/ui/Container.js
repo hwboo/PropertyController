@@ -34,6 +34,7 @@ class Container extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         this.data = nextProps.data;
+        return false;
     }
 
     handleKeyEvent(event) {
