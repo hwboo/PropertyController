@@ -32,6 +32,10 @@ class Container extends Component {
         UIManager.removeKeyListener(this.id, this.handleKeyEvent);
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        this.data = nextProps.data;
+    }
+
     handleKeyEvent(event) {
         return false;
     }

@@ -16,6 +16,11 @@ class View extends Container {
         this.is_focus = props.is_focus;
         this.callback = props.callback;
     }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        super.shouldComponentUpdate(nextProps, nextState);
+        this.is_focus = nextProps.is_focus;
+    }
 }
 
 export default View;
