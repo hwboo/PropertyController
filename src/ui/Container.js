@@ -17,24 +17,17 @@ const TYPE = {
 class Container extends Component {
     constructor(props) {
         super(props);
-        this.id = props.id;
-        this.data = props.data;
         this.type = "";
-        this.log_tag = this.id;
+        this.log_tag = props.id;
         this.handleKeyEvent = this.handleKeyEvent.bind(this);
     }
 
     componentWillMount() {
-        UIManager.addKeyListener(this.id, this.handleKeyEvent);
+        UIManager.addKeyListener(this.props.id, this.handleKeyEvent);
     }
 
     componentWillUnmount() {
-        UIManager.removeKeyListener(this.id, this.handleKeyEvent);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        this.data = nextProps.data;
-        return false;
+        UIManager.removeKeyListener(this.props.id, this.handleKeyEvent);
     }
 
     handleKeyEvent(event) {
@@ -42,7 +35,7 @@ class Container extends Component {
     }
 
     printLog(msg) {
-        Log.printLog(this.id, msg);
+        Log.printLog(this.props.id, msg);
     }
 
     static get TYPE() {
@@ -53,4 +46,9 @@ class Container extends Component {
         return this.type;
     }
 }
+
+Container.propTypes = {
+    id: React.PropTypes.string.isRequired,
+    data: React.PropTypes.object
+};
 export default Container;

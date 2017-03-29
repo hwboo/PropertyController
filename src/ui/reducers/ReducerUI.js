@@ -49,6 +49,9 @@ export default function (state = [], action) {
             }
         case ADD_VIEW :
             layer_index = getIndex(action.payload.layer_id, state);
+            if (!action.payload.is_focus) {
+                action.payload.is_focus = false;
+            }
             if (layer_index !== -1) {
                 state[layer_index].views[action.payload.view_id] = {
                     id: action.payload.view_id,

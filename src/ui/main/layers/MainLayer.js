@@ -36,10 +36,10 @@ class MainLayer extends Layer {
         if (this.menu_list_id === data.view_id) {
             let type = data.type;
             this.printLog("notifyFromView() - type :" + type);
-            if(MenuListView.TYPE.UNFOCUS === type) {
+            if (MenuListView.TYPE.UNFOCUS === type) {
                 this.setFocusView(data.view_id, false);
-            } else if(MenuListView.TYPE.CHANGE_FOCUS === type) {
-                this.updateView();
+            } else if (MenuListView.TYPE.CHANGE_FOCUS === type) {
+                this.updateView(this.menu_list_id, DataManager.getMenuData());
             }
         }
     }

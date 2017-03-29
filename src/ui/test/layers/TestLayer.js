@@ -2,7 +2,6 @@
 import React, {PropTypes} from "react";
 import Layer from '../../Layer';
 import KEY from '../../../common/KeyDef';
-import TestPopup from '../popups/TestPopup'
 import TestView from '../views/TestView';
 
 /**
@@ -20,10 +19,6 @@ class TestLayer extends Layer {
     componentWillMount() {
         super.componentWillMount();
         this.view_id = this.addView(TestView);
-        this.addPopup(TestPopup);
-        this.addPopup(TestPopup);
-        this.addPopup(TestPopup);
-
     }
 
     render() {
@@ -38,10 +33,8 @@ class TestLayer extends Layer {
         this.printLog("called handleKeyEvent() key_code : " + event.keyCode);
         let key_code = event.keyCode;
         if (key_code === KEY.UP) {
+            this.setFocusView(this.view_id, false);
         } else if (key_code === KEY.DOWN) {
-            // this.props.downList();
-        } else if (key_code === KEY.RIGHT) {
-            // this.props.unfocusList();
             this.setFocusView(this.view_id, true);
         }
         return false;

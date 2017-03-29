@@ -18,27 +18,27 @@ class Layer extends Container {
     }
 
     addPopup(class_info, data, index) {
-        return UIManager.addPopup(class_info, this.id, data, this.notifyFromPopup, index);
+        return UIManager.addPopup(class_info, this.props.id, data, this.notifyFromPopup, index);
     }
 
     removePopup(popup_id) {
-        UIManager.removePopup(this.id, popup_id);
+        UIManager.removePopup(this.props.id, popup_id);
     }
 
     addView(class_info, data, is_focus) {
-        return UIManager.addView(class_info, this.id, data, this.notifyFromView, is_focus);
+        return UIManager.addView(class_info, this.props.id, data, this.notifyFromView, is_focus);
     }
 
     removeView(view_id) {
-        return UIManager.addView(this.id, view_id);
+        return UIManager.addView(this.props.id, view_id);
     }
 
     setFocusView(view_id, is_focus) {
-        UIManager.setFocusView(this.id, view_id, is_focus);
+        UIManager.setFocusView(this.props.id, view_id, is_focus);
     }
 
     updateView(view_id, data) {
-        UIManager.updateView(this.id, view_id, data);
+        UIManager.updateView(this.props.id, view_id, data);
     }
 
     notifyFromView() {

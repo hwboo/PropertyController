@@ -17,7 +17,7 @@ class TestPopup extends Popup {
     render() {
         return (
             <div>
-                <h1>TestPopup - {this.id} / {this.layer_id}</h1>
+                <h1>TestPopup - {this.props.id} / {this.props.layer_id}</h1>
             </div>
         );
     }
@@ -26,7 +26,7 @@ class TestPopup extends Popup {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
         if (key_code === KEY.UP) {
-            this.callback();
+            this.props.callback();
             return true;
         }
         return false;

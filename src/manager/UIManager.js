@@ -93,6 +93,7 @@ class UIManager {
 
     getView(view_info) {
         Log.printLog(this.log_tag, "called getView() - view_info : " + view_info);
+        window.view_info = view_info;
         let view = React.createElement(
             view_info.class_info,
             {

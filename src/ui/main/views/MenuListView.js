@@ -19,11 +19,26 @@ const TYPE = {
 class MenuListView extends View {
     componentWillMount() {
         super.componentWillMount();
+        this.printLog("called componentWillMount()");
         this.props.setListInfo(Object.keys(this.props.data).length, 5);
-        this.props.setFocus(this.is_focus);
+        this.props.setFocus(this.props.is_focus);
+    }
+
+    componentWillReceiveProps() {
+        this.printLog("called componentWillReceiveProps()");
+    }
+
+    shouldComponentUpdate() {
+        this.printLog("called shouldComponentUpdate()");
+        return true;
+    }
+
+    componentWillUpdate() {
+        this.printLog("called componentWillUpdate()");
     }
 
     render() {
+        this.printLog("called render()");
         let data = this.props.data;
         let list_info = this.props.list_info;
         let menus = [];
@@ -51,25 +66,25 @@ class MenuListView extends View {
         let key_code = event.keyCode;
         if (key_code === KEY.UP) {
             this.props.upList();
-            this.callback({
+            this.props.callback({
                 type: TYPE.CHANGE_FOCUS,
-                view_id: this.id,
+                view_id: this.props.id,
                 focused_Index: this.props.list_info.focused_Index
             });
             return true;
         } else if (key_code === KEY.DOWN) {
             this.props.downList();
-            this.callback({
+            this.props.callback({
                 type: TYPE.CHANGE_FOCUS,
-                view_id: this.id,
+                view_id: this.props.id,
                 focused_Index: this.props.list_info.focused_Index
             });
             return true;
         } else if (key_code === KEY.RIGHT) {
             this.props.setFocus(false);
-            this.callback({
+            this.props.callback({
                 type: TYPE.UNFOCUS,
-                view_id: this.id
+                view_id: this.props.id
             });
             return true;
         }

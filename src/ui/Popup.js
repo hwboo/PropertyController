@@ -12,8 +12,10 @@ class Popup extends Container {
     constructor(props) {
         super(props);
         this.type = Container.TYPE.POPUP;
-        this.layer_id = props.layer_id;
-        this.callback = props.callback;
     }
 }
+Container.propTypes = {
+    layer_id: React.PropTypes.string.isRequired,
+    callback: React.PropTypes.func.isRequired
+};
 export default Popup;

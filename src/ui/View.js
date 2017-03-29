@@ -12,16 +12,12 @@ class View extends Container {
     constructor(props) {
         super(props);
         this.type = Container.TYPE.VIEW;
-        this.layer_id = props.layer_id;
-        this.is_focus = props.is_focus;
-        this.callback = props.callback;
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        super.shouldComponentUpdate(nextProps, nextState);
-        this.is_focus = nextProps.is_focus;
-        return false;
     }
 }
 
+View.propTypes = {
+    layer_id: React.PropTypes.string.isRequired,
+    is_focus: React.PropTypes.bool.isRequired,
+    callback: React.PropTypes.func.isRequired
+};
 export default View;
