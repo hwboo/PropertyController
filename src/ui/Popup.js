@@ -14,7 +14,7 @@ class Popup extends Container {
         this.type = Container.TYPE.POPUP;
     }
 }
-Container.propTypes = {
+Popup.propTypes = {
     layer_id: React.PropTypes.string.isRequired,
     callback: React.PropTypes.func.isRequired
 };
