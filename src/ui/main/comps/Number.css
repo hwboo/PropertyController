@@ -1,0 +1,40 @@
+.number {
+    position: relative;
+    display: block;
+    width:600px;
+    height:70px;
+    margin-top:5px;
+    border-radius:5px;
+    background-color: aliceblue;
+}
+
+.prop_name{
+    position: absolute;
+    width:350px;
+    top:19px;
+    left:15px;
+    font-size: 24px;
+    background-color: burlywood;
+    color:rgba(0,0,0,0.8);
+}
+
+.number_box {
+    position: absolute;
+    width:200px;
+    height:70px;
+    left:380px;
+    text-align: left;
+    font-size: 20px;
+    color: white;
+}
+
+.value_box {
+    position: absolute;
+    width:180px;
+    height: 40px;
+    top:12px;
+    text-align: center;
+    background-color: rgb(153,151,150);
+    font-size: 17px;
+    color: white;
+}

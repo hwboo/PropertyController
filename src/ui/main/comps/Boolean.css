@@ -1,0 +1,58 @@
+.boolean {
+    position: relative;
+    display: block;
+    width:600px;
+    height:70px;
+    margin-top:5px;
+    border-radius:5px;
+    background-color: aliceblue;
+}
+
+.prop_name{
+    position: absolute;
+    width:350px;
+    top:19px;
+    left:15px;
+    font-size: 24px;
+    background-color: burlywood;
+    color:rgba(0,0,0,0.8);
+}
+
+.boolean_box {
+    position: absolute;
+    width:200px;
+    height:70px;
+    left:380px;
+    text-align: left;
+    font-size: 20px;
+    color: white;
+}
+
+.left_btn {
+    position: absolute;
+    width:90px;
+    height: 40px;
+    top:12px;
+    text-align: center;
+    background-color: rgb(153,151,150);
+    font-size: 17px;
+    color: white;
+}
+
+.btn_txt {
+    position: absolute;
+    top: 7px;
+    left: 26px;
+}
+
+.right_btn {
+    position: absolute;
+    width:90px;
+    height: 40px;
+    left:90px;
+    top:12px;
+    text-align: center;
+    background-color: #4d0b0a;
+    font-size: 17px;
+    color: white;
+}

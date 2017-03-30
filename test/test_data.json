@@ -9,7 +9,7 @@
   "TEST_2": {
     "CATEGORY": "DEBUG_MODE1",
     "TYPE": "Number",
-    "VALUE": false,
+    "VALUE": 5,
     "DES": "APP_DEBUG_MODE",
     "USE": true
   },
@@ -23,8 +23,15 @@
   "TEST_4": {
     "CATEGORY": "DEBUG_MODE2",
     "TYPE": "Number",
-    "VALUE": false,
+    "VALUE": 7,
     "DES": "APP_DEBUG_MODE",
+    "USE": true
+  },
+  "TEST_5": {
+    "CATEGORY": "DEBUG_MODE2",
+    "TYPE": "String",
+    "VALUE": "STRING_TEST",
+    "DES": "TEST",
     "USE": true
   }
 }
