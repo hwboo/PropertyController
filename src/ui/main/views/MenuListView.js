@@ -28,8 +28,13 @@ class MenuListView extends View {
         this.printLog("called componentWillReceiveProps()");
     }
 
-    shouldComponentUpdate() {
-        this.printLog("called shouldComponentUpdate()");
+    shouldComponentUpdate(nextProps, nextState) {
+        this.printLog("called shouldComponentUpdate() - nextProps.isfocus : " + nextProps.is_focus + ", this.props.is_focus : "+this.props.is_focus);
+        this.printLog("called shouldComponentUpdate() - nextProps.data : " + nextProps.data + ", this.props.data : "+this.props.data);
+
+        if(nextProps.is_focus !== this.props.is_focus) {
+            this.props.setFocus(nextProps.is_focus);
+        }
         return true;
     }
 
@@ -64,29 +69,32 @@ class MenuListView extends View {
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
-        if (key_code === KEY.UP) {
-            this.props.upList();
-            this.props.callback({
-                type: TYPE.CHANGE_FOCUS,
-                view_id: this.props.id,
-                focused_Index: this.props.list_info.focused_Index
-            });
-            return true;
-        } else if (key_code === KEY.DOWN) {
-            this.props.downList();
-            this.props.callback({
-                type: TYPE.CHANGE_FOCUS,
-                view_id: this.props.id,
-                focused_Index: this.props.list_info.focused_Index
-            });
-            return true;
-        } else if (key_code === KEY.RIGHT) {
-            this.props.setFocus(false);
-            this.props.callback({
-                type: TYPE.UNFOCUS,
-                view_id: this.props.id
-            });
-            return true;
+
+        switch(key_code) {
+            case KEY.UP :
+                this.props.upList();
+                this.props.callback({
+                    type: TYPE.CHANGE_FOCUS,
+                    view_id: this.props.id,
+                    focused_Index: this.props.list_info.focused_Index
+                });
+                return true;
+            case KEY.DOWN :
+                this.props.downList();
+                this.props.callback({
+                    type: TYPE.CHANGE_FOCUS,
+                    view_id: this.props.id,
+                    focused_Index: this.props.list_info.focused_Index
+                });
+                return true;
+            case KEY.RIGHT :
+                this.props.setFocus(false);
+                this.props.callback({
+                    type: TYPE.UNFOCUS,
+                    view_id: this.props.id,
+                    focused_Index: this.props.list_info.focused_Index
+                });
+                return true;
         }
     }
 

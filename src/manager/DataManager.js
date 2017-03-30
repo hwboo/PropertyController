@@ -14,6 +14,8 @@ class DataManager {
         this.menu_map = {};
         /** Log tag*/
         this.log_tag = "DataManager";
+        /* state에서 menu data들의 key를 저장해놓은 배열 */
+        this.key_array = [];
     }
 
     /**
@@ -25,6 +27,8 @@ class DataManager {
     init(data) {
         Log.printLog(this.log_tag, "called init() - data : " + data);
         let result = false;
+        let index = 0;
+
         try {
             for (let key in data) {
                 let temp = Object.assign({}, data[key], {'PROPERTY' : key});
@@ -35,6 +39,10 @@ class DataManager {
                 }
                 if (!this.menu_map[temp.CATEGORY]) {
                     this.menu_map[temp.CATEGORY] = new Array();
+                }
+
+                if (this.key_array.indexOf(temp.CATEGORY) < 0) {
+                    this.key_array[index++] = temp.CATEGORY;
                 }
                 this.menu_map[temp.CATEGORY].push(temp);
             }
@@ -49,6 +57,16 @@ class DataManager {
 
     getMenuData() {
         return this.menu_map;
+    }
+
+    getKeyArray() {
+        return this.key_array;
+    }
+
+    getDetailData(index) {
+        let ret_arr = this.getKeyArray();
+        // [si.mun] key값을 저장하고있는 array에서 인자로 전달받은 index에 해당하는 key를 반한해준다.
+        return this.menu_map[ret_arr[index]];
     }
 }
 export default new DataManager();

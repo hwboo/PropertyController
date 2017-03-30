@@ -5,6 +5,7 @@ import Layer from "../../Layer";
 import KEY from "../../../common/KeyDef";
 import DataManager from "../../../manager/DataManager";
 import MenuListView from "../views/MenuListView";
+import MenuDetailView from "../views/MenuDetailView";
 
 /**
  * @fileoverview
@@ -16,11 +17,13 @@ class MainLayer extends Layer {
     constructor(props) {
         super(props);
         this.menu_list_id = null;
+        this.menu_detail_id = null;
     }
 
     componentWillMount() {
         super.componentWillMount();
         this.menu_list_id = this.addView(MenuListView, DataManager.getMenuData(), true);
+        this.menu_detail_id = this.addView(MenuDetailView, DataManager.getDetailData(0), false);
     }
 
     render() {
@@ -32,14 +35,21 @@ class MainLayer extends Layer {
     }
 
     notifyFromView(data) {
-        this.printLog("called notifyFromView() - data :" + data);
+        let type = data.type;
+        this.printLog("called notifyFromView() - view_id :" + data.view_id + ', type : ' + type);
+
         if (this.menu_list_id === data.view_id) {
-            let type = data.type;
-            this.printLog("notifyFromView() - type :" + type);
-            if (MenuListView.TYPE.UNFOCUS === type) {
-                this.setFocusView(data.view_id, false);
-            } else if (MenuListView.TYPE.CHANGE_FOCUS === type) {
-                this.updateView(this.menu_list_id, DataManager.getMenuData());
+            if(MenuListView.TYPE.UNFOCUS === type) {
+                this.setFocusView(this.menu_list_id, false);
+                this.setFocusView(this.menu_detail_id, true);
+            } else if(MenuListView.TYPE.CHANGE_FOCUS === type) {
+                this.updateView(this.menu_detail_id, DataManager.getDetailData(data.focused_Index));
+            }
+        }
+        else if (this.menu_detail_id === data.view_id) {
+            if(MenuDetailView.TYPE.UNFOCUS === type) {
+                this.setFocusView(this.menu_list_id, true);
+                this.setFocusView(this.menu_detail_id, false);
             }
         }
     }
