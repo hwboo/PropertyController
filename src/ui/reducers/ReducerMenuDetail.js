@@ -1,5 +1,5 @@
 "use strict";
-import {SET_PROPERTIES, UP_PROPERTY, DOWN_PROPERTY, SET_FOCUS_PROPERTY} from '../actions/ActionMenuDetail';
+import {SET_CONTENTS, UP_CONTENT, DOWN_CONTENT, SET_FOCUS_CONTENT} from '../actions/ActionMenuDetail';
 
 /**
  * @fileoverview
@@ -26,7 +26,7 @@ export default function (state = initialState, action) {
     let is_focus = state.is_focus;
 
     switch (action.type) {
-        case SET_PROPERTIES :
+        case SET_CONTENTS :
             return Object.assign({}, state, {
                 total_item: action.payload.total_item,
                 page_per_item: action.payload.page_per_item,
@@ -36,7 +36,7 @@ export default function (state = initialState, action) {
                 selected_index: 0,
                 is_focus: false
             });
-        case UP_PROPERTY:
+        case UP_CONTENT:
             if(!is_focus) {
                 return state;
             }
@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
                 selected_index: focused_Index,
                 cur_page: cur_page
             });
-        case DOWN_PROPERTY:
+        case DOWN_CONTENT:
             if(!is_focus) {
                 return state;
             }
@@ -72,7 +72,7 @@ export default function (state = initialState, action) {
                 selected_index: focused_Index,
                 cur_page: cur_page
             });
-        case SET_FOCUS_PROPERTY :
+        case SET_FOCUS_CONTENT :
             return Object.assign({}, state, {
                 is_focus: action.payload.is_focus
             });

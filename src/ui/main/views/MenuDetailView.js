@@ -3,7 +3,7 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import KEY from "../../../common/KeyDef";
 import View from '../../View';
-import {setProperties, upProperty, downProperty, setFocusProperty, showPopup} from "../../actions/ActionMenuDetail";
+import {setContents, upContent, downContent, setFocusContent} from "../../actions/ActionMenuDetail";
 import Content from "../comps/Content";
 import PropertyPopup from "../popup/PropertyPopup";
 
@@ -14,8 +14,8 @@ const TYPE = {
 class MenuDetailView extends View {
     componentWillMount() {
         super.componentWillMount();
-        this.props.setProperties(Object.keys(this.props.data).length, 5);
-        this.props.setFocusProperty(this.is_focus);
+        this.props.setContents(Object.keys(this.props.data).length, 5);
+        this.props.setFocusContent(this.is_focus);
 
         return {
             show_pop : false
@@ -27,11 +27,11 @@ class MenuDetailView extends View {
         this.printLog("called shouldComponentUpdate() - nextProps.data : " + nextProps.data + ", this.props.data : "+this.props.data);
 
         if(nextProps.is_focus !== this.props.is_focus) {
-            this.props.setFocusProperty(nextProps.is_focus);
+            this.props.setFocusContent(nextProps.is_focus);
         }
         // MenuDetailView로 focus가 변경되었을 때, MenuDetailView redux의 state를 변경해주어야 한다.
         if(nextProps.data !== this.props.data) {
-            this.props.setProperties(Object.keys(nextProps.data).length, 5);
+            this.props.setContents(Object.keys(nextProps.data).length, 5);
         }
 
         return true;
@@ -79,13 +79,13 @@ class MenuDetailView extends View {
 
         switch(key_code) {
             case KEY.UP :
-                this.props.upProperty();
+                this.props.upContent();
                 return true;
             case KEY.DOWN :
-                this.props.downProperty();
+                this.props.downContent();
                 return true;
             case KEY.LEFT :
-                this.props.setFocusProperty(false);
+                this.props.setFocusContent(false);
                 this.props.callback({
                     type: TYPE.UNFOCUS,
                     view_id: this.props.id,
@@ -124,11 +124,10 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        setProperties: (total_item, page_per_item) => dispatch(setProperties(total_item, page_per_item)),
-        setFocusProperty: (is_focus) => dispatch(setFocusProperty(is_focus)),
-        showPopup: (is_popup_show) => dispatch(showPopup(is_popup_show)),
-        upProperty: () => dispatch(upProperty()),
-        downProperty: () => dispatch(downProperty()),
+        setContents: (total_item, page_per_item) => dispatch(setContents(total_item, page_per_item)),
+        setFocusContent: (is_focus) => dispatch(setFocusContent(is_focus)),
+        upContent: () => dispatch(upContent()),
+        downContent: () => dispatch(downContent()),
     };
 };
 

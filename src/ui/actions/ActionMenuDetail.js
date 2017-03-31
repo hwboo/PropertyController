@@ -6,14 +6,14 @@
  * @version
  * <p>Copyright (c) 1997-2015 Alticast, Inc. All rights reserved.
  */
-export const UP_PROPERTY = "UP_PROPERTY";
-export const DOWN_PROPERTY = "DOWN_PROPERTY";
-export const SET_PROPERTIES = "SET_PROPERTIES";
-export const SET_FOCUS_PROPERTY = "SET_FOCUS_PROPERTY";
+export const UP_CONTENT = "UP_CONTENT";
+export const DOWN_CONTENT = "DOWN_CONTENT";
+export const SET_CONTENTS = "SET_CONTENTS";
+export const SET_FOCUS_CONTENT = "SET_FOCUS_CONTENT";
 
-export function setProperties(total_item, page_per_item) {
+export function setContents(total_item, page_per_item) {
     return {
-        type: SET_PROPERTIES,
+        type: SET_CONTENTS,
         payload: {
             total_item: total_item,
             page_per_item: page_per_item
@@ -21,21 +21,21 @@ export function setProperties(total_item, page_per_item) {
     }
 }
 
-export function upProperty() {
+export function upContent() {
     return {
-        type: UP_PROPERTY
+        type: UP_CONTENT
     }
 }
 
-export function downProperty() {
+export function downContent() {
     return {
-        type: DOWN_PROPERTY
+        type: DOWN_CONTENT
     }
 }
 
-export function setFocusProperty(is_focus) {
+export function setFocusContent(is_focus) {
     return {
-        type: SET_FOCUS_PROPERTY,
+        type: SET_FOCUS_CONTENT,
         payload: {
             is_focus: is_focus
         }
