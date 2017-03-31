@@ -12,6 +12,18 @@ class View extends Container {
     constructor(props) {
         super(props);
         this.type = Container.TYPE.VIEW;
+        this.notifyFromPopup = this.notifyFromPopup.bind(this);
+    }
+
+    addPopup(class_info, data, index) {
+        return UIManager.addPopup(class_info, this.props.layer_id, data, this.notifyFromPopup, index);
+    }
+
+    removePopup(popup_id) {
+        UIManager.removePopup(this.props.layer_id, popup_id);
+    }
+
+    notifyFromPopup() {
     }
 }
 
