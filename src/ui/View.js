@@ -1,6 +1,7 @@
 "use strict";
 import React from "react";
 import Container from "./Container";
+import UIManager from '../manager/UIManager'
 
 /**
  * @fileoverview
