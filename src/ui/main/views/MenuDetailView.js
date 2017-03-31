@@ -16,10 +16,6 @@ class MenuDetailView extends View {
         super.componentWillMount();
         this.props.setContents(Object.keys(this.props.data).length, 5);
         this.props.setFocusContent(this.is_focus);
-
-        return {
-            show_pop : false
-        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -98,15 +94,6 @@ class MenuDetailView extends View {
                 let focused_index = prop_list_info.focused_Index;
 
                 this.addPopup(PropertyPopup, data[focused_index],-1);
-                // this.props.showPopup("visible");
-                // this.props.callback({
-                //     type: TYPE.SHOW_POPUP,
-                //     view_id: this.props.id,
-                //     focused_Index: this.props.properties_info.focused_Index,
-                //     selected_index: this.props.properties_info.selected_index
-                // });
-                // this.props.showPopup("hidden");
-                // Create Popup
                 return true;
         }
     }
