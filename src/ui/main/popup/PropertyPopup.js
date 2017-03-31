@@ -2,6 +2,9 @@
 import React from "react";
 import Popup from '../../Popup';
 import KEY from "../../../common/KeyDef";
+import {connect} from "react-redux";
+import {upProperty, downProperty, leftProperty, rightProperty} from "../../actions/ActionPopup";
+
 import css from "./css/popup.css";
 import String from "../comps/String";
 import Number from "../comps/Number";
@@ -27,7 +30,7 @@ class PropertyPopup extends Popup {
             backgroundColor: 'darkgrey',
         }
 
-        let prop_content = [];
+        let prop_content = null;
 
         switch(this.props.data.TYPE) {
             case 'Number' :
@@ -71,9 +74,18 @@ class PropertyPopup extends Popup {
 
         switch(key_code) {
             case KEY.UP :
-                this.props.callback();
+                this.props.upProperty();
                 return true;
-            default :
+            case KEY.DOWN :
+                this.props.downProperty();
+                return true;
+            case KEY.LEFT :
+                this.props.leftProperty();
+                return true;
+            case KEY.RIGHT :
+                this.props.rightProperty();
+                return true;
+            case KEY.ENTER :
                 if (key_code === 13) {// Enter
                     this.props.callback({
                         type: TYPE.SAVE,
@@ -84,8 +96,26 @@ class PropertyPopup extends Popup {
 
                 }
                 return true;
+            default :
+                return true;
         }
         return false;
     }
 }
-export default PropertyPopup;
+
+let mapStateToProps = (state) => {
+    return {
+        focus_info: state.ReducerPopup
+    }
+};
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+        upProperty: () => dispatch(upProperty()),
+        downProperty: () => dispatch(downProperty()),
+        leftProperty: () => dispatch(leftProperty()),
+        rightProperty: () => dispatch(rightProperty()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PropertyPopup);

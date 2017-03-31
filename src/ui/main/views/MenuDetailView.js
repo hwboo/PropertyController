@@ -93,7 +93,7 @@ class MenuDetailView extends View {
                 let prop_list_info = this.props.properties_info;
                 let focused_index = prop_list_info.focused_Index;
 
-                this.addPopup(PropertyPopup, data[focused_index],-1);
+                this.addPopup(PropertyPopup, data[focused_index], 0);
                 return true;
         }
     }

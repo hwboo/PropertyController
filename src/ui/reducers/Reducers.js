@@ -3,6 +3,7 @@ import {combineReducers} from "redux";
 import ReducerMenuList from "./ReducerMenuList";
 import ReducerUI from "./ReducerUI";
 import ReducerMenuDetail from "./ReducerMenuDetail";
+import ReducerPopup from "./ReducerPopup";
 
 /**
  * @fileoverview
@@ -13,5 +14,6 @@ import ReducerMenuDetail from "./ReducerMenuDetail";
 export default combineReducers({
     ReducerUI,
     ReducerMenuList,
-    ReducerMenuDetail
+    ReducerMenuDetail,
+    ReducerPopup
 });
