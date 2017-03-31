@@ -6,6 +6,7 @@ import KEY from "../../../common/KeyDef";
 import DataManager from "../../../manager/DataManager";
 import MenuListView from "../views/MenuListView";
 import MenuDetailView from "../views/MenuDetailView";
+import PropertyPopup from "../popup/PropertyPopup";
 
 /**
  * @fileoverview
@@ -18,6 +19,7 @@ class MainLayer extends Layer {
         super(props);
         this.menu_list_id = null;
         this.menu_detail_id = null;
+        this.property_popup_id = null;
     }
 
     componentWillMount() {
@@ -51,6 +53,10 @@ class MainLayer extends Layer {
                 this.setFocusView(this.menu_list_id, true);
                 this.setFocusView(this.menu_detail_id, false);
             }
+            // else if (MenuDetailView.TYPE.SHOW_POPUP === type) {
+            //     let popup_data = DataManager.getPopupData(data.focused_Index, data.selected_index);
+            //     this.property_popup_id = this.addPopup(PropertyPopup, popup_data, -1);
+            // }
         }
     }
 

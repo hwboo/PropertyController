@@ -1,0 +1,54 @@
+.popup_container {
+    position:fixed;
+    left: 8px;
+    top: 86px;
+    width: 800px;
+    height: 400px;
+}
+
+.dimmed {
+    position: absolute;
+    width: 800px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn_box {
+    position: absolute;
+    top:230px;
+    width:500px;
+    height:70px;
+    background-color: lightblue;
+}
+
+.left_btn {
+    position: absolute;
+    left:150px;
+    width:90px;
+    height: 40px;
+    top:12px;
+    text-align: center;
+    background-color: rgb(153,151,150);
+    font-size: 17px;
+    color: white;
+}
+
+.right_btn {
+    position: absolute;
+    top:12px;
+    left:270px;
+    width:90px;
+    height: 40px;
+    text-align: center;
+    background-color: rgb(153,151,150);
+    font-size: 17px;
+    color: white;
+}
+
+.btn_txt {
+    position: absolute;
+    top: 7px;
+    left: 26px;
+}
+
+

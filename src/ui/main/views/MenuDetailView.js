@@ -3,10 +3,9 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import KEY from "../../../common/KeyDef";
 import View from '../../View';
-import {setProperties, upProperty, downProperty, setFocusProperty} from "../../actions/ActionMenuDetail";
-import BooleanProp  from "../comps/BooleanProp";
-import NumberProp from "../comps/NumberProp";
-import StringProp from "../comps/StringProp";
+import {setProperties, upProperty, downProperty, setFocusProperty, showPopup} from "../../actions/ActionMenuDetail";
+import Content from "../comps/Content";
+import PropertyPopup from "../popup/PropertyPopup";
 
 const TYPE = {
     UNFOCUS: "UNFOCUS"
@@ -17,6 +16,10 @@ class MenuDetailView extends View {
         super.componentWillMount();
         this.props.setProperties(Object.keys(this.props.data).length, 5);
         this.props.setFocusProperty(this.is_focus);
+
+        return {
+            show_pop : false
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -44,13 +47,7 @@ class MenuDetailView extends View {
             let focus = count === prop_list_info.focused_Index && this.props.is_focus;
             let select = count === prop_list_info.selected_index && this.props.is_focus;
 
-            if (data[i].TYPE === 'Boolean') {
-                properties.push(<BooleanProp key={data[i].PROPERTY} focus={focus} select={select} data={data[i]}/>);
-            } else if (data[i].TYPE === 'Number') {
-                properties.push(<NumberProp key={data[i].PROPERTY} focus={focus} select={select} data={data[i]}/>);
-            } else if (data[i].TYPE === 'String'){
-                properties.push(<StringProp key={data[i].PROPERTY} focus={focus} select={select} data={data[i]}/>);
-            }
+            properties.push(<Content key={data[i].PROPERTY} focus={focus} select={select} data={data[i]}/>);
             count++;
         }
 
@@ -58,7 +55,7 @@ class MenuDetailView extends View {
             position: 'absolute',
             background: 'yellow',
             top: '86px',
-            left: '210px',
+            left: '208px',
             width: '600px',
             height: '400px',
         };
@@ -66,8 +63,14 @@ class MenuDetailView extends View {
         return (
             <div style={style}>
                 {properties}
+                {/*<PropertyPopup is_popup_show={this.props.properties_info.is_popup_show}*/}
+                               {/*data={data[this.props.properties_info.selected_index]}/>*/}
             </div>
         );
+    }
+
+    notifyFromPopup(data) {
+        this.removePopup(data.popup_id);
     }
 
     handleKeyEvent(event) {
@@ -89,10 +92,22 @@ class MenuDetailView extends View {
                     focused_Index: this.props.properties_info.focused_Index
                 });
                 return true;
-            default :
-                let key = key_code - 48;
-                return true;
+            case KEY.ENTER :
+                let data = this.props.data;
+                let prop_list_info = this.props.properties_info;
+                let focused_index = prop_list_info.focused_Index;
 
+                this.addPopup(PropertyPopup, data[focused_index],-1);
+                // this.props.showPopup("visible");
+                // this.props.callback({
+                //     type: TYPE.SHOW_POPUP,
+                //     view_id: this.props.id,
+                //     focused_Index: this.props.properties_info.focused_Index,
+                //     selected_index: this.props.properties_info.selected_index
+                // });
+                // this.props.showPopup("hidden");
+                // Create Popup
+                return true;
         }
     }
 
@@ -111,6 +126,7 @@ let mapDispatchToProps = (dispatch) => {
     return {
         setProperties: (total_item, page_per_item) => dispatch(setProperties(total_item, page_per_item)),
         setFocusProperty: (is_focus) => dispatch(setFocusProperty(is_focus)),
+        showPopup: (is_popup_show) => dispatch(showPopup(is_popup_show)),
         upProperty: () => dispatch(upProperty()),
         downProperty: () => dispatch(downProperty()),
     };

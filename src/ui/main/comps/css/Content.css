@@ -1,4 +1,4 @@
-.string {
+.content {
     position: relative;
     display: block;
     width:600px;
@@ -18,7 +18,7 @@
     color:rgba(0,0,0,0.8);
 }
 
-.string_box {
+.prop_value {
     position: absolute;
     width:200px;
     height:70px;
@@ -28,13 +28,13 @@
     color: white;
 }
 
-.value_box {
+.prop_value_display {
     position: absolute;
     width:180px;
     height: 40px;
-    top:12px;
+    top:16px;
     text-align: center;
     background-color: rgb(153,151,150);
-    font-size: 17px;
+    font-size: 25px;
     color: white;
 }

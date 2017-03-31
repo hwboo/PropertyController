@@ -55,18 +55,23 @@ class DataManager {
         return result;
     }
 
-    getMenuData() {
-        return this.menu_map;
-    }
-
     getKeyArray() {
         return this.key_array;
+    }
+
+    getMenuData() {
+        return this.menu_map;
     }
 
     getDetailData(index) {
         let ret_arr = this.getKeyArray();
         // [si.mun] key값을 저장하고있는 array에서 인자로 전달받은 index에 해당하는 key를 반한해준다.
         return this.menu_map[ret_arr[index]];
+    }
+
+    getPopupData(detail_index, popup_index) {
+        let detail_data = this.getDetailData(detail_index);
+        return detail_data[popup_index];
     }
 }
 export default new DataManager();
