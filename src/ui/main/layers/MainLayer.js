@@ -19,13 +19,12 @@ class MainLayer extends Layer {
         super(props);
         this.menu_list_id = null;
         this.menu_detail_id = null;
-        this.property_popup_id = null;
     }
 
     componentWillMount() {
         super.componentWillMount();
         this.menu_list_id = this.addView(MenuListView, DataManager.getMenuData(), true);
-        this.menu_detail_id = this.addView(MenuDetailView, DataManager.getDetailData(0), false);
+        this.menu_detail_id = this.addView(MenuDetailView, DataManager.getDetailData(), false);
     }
 
     render() {
@@ -45,7 +44,7 @@ class MainLayer extends Layer {
                 this.setFocusView(this.menu_list_id, false);
                 this.setFocusView(this.menu_detail_id, true);
             } else if(MenuListView.TYPE.CHANGE_FOCUS === type) {
-                this.updateView(this.menu_detail_id, DataManager.getDetailData(data.focused_Index));
+                this.updateView(this.menu_detail_id, DataManager.getDetailData(data.category));
             }
         }
         else if (this.menu_detail_id === data.view_id) {
@@ -53,12 +52,19 @@ class MainLayer extends Layer {
                 this.setFocusView(this.menu_list_id, true);
                 this.setFocusView(this.menu_detail_id, false);
             }
-            // else if (MenuDetailView.TYPE.SHOW_POPUP === type) {
-            //     let popup_data = DataManager.getPopupData(data.focused_Index, data.selected_index);
-            //     this.property_popup_id = this.addPopup(PropertyPopup, popup_data, -1);
-            // }
+            else if (MenuDetailView.TYPE.CHANGE_PROPERTY === type) { // Property Popup으로부터 전달되어온 data
+                DataManager.setDetailData({
+                    focused_detail_view_Index : data.focused_detail_view_Index, // detail view에서 몇번째 property인지 알려줌
+                    category: data.category,
+                    changed_use: data.changed_use,
+                    changed_value: data.changed_value
+                });
+
+                this.updateView(data.view_id, DataManager.getDetailData(data.category));
+            }
         }
     }
+
 
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);

@@ -69,33 +69,43 @@ class MenuListView extends View {
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
+        let count = 0;
+        let focused_Index;
+        let cur_category;
+        let type;
 
         switch(key_code) {
             case KEY.UP :
                 this.props.upList();
-                this.props.callback({
-                    type: TYPE.CHANGE_FOCUS,
-                    view_id: this.props.id,
-                    focused_Index: this.props.list_info.focused_Index
-                });
-                return true;
+                type = TYPE.CHANGE_FOCUS;
+                break;
             case KEY.DOWN :
                 this.props.downList();
-                this.props.callback({
-                    type: TYPE.CHANGE_FOCUS,
-                    view_id: this.props.id,
-                    focused_Index: this.props.list_info.focused_Index
-                });
-                return true;
+                type = TYPE.CHANGE_FOCUS;
+                break;
             case KEY.RIGHT :
                 this.props.setFocus(false);
-                this.props.callback({
-                    type: TYPE.UNFOCUS,
-                    view_id: this.props.id,
-                    focused_Index: this.props.list_info.focused_Index
-                });
-                return true;
-        }``
+                type = TYPE.UNFOCUS
+                break;
+        }
+
+        focused_Index = this.props.list_info.focused_Index;
+
+        for(let key in this.props.data) {
+            if (count === focused_Index) {
+                cur_category = key;
+                break;
+            }
+            count++;
+        }
+
+        this.props.callback({
+            type: type,
+            view_id: this.props.id,
+            category: cur_category
+        });
+
+        return true;
     }
 
     static get TYPE() {

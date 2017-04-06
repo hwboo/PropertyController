@@ -16,6 +16,8 @@ class DataManager {
         this.log_tag = "DataManager";
         /* state에서 menu data들의 key를 저장해놓은 배열 */
         this.key_array = [];
+        /* Property Controller에서 사용할 데이터 */
+        this.origin_properties = {};
     }
 
     /**
@@ -26,15 +28,18 @@ class DataManager {
      */
     init(data) {
         Log.printLog(this.log_tag, "called init() - data : " + data);
+
+        this.origin_properties = data;
         let result = false;
         let index = 0;
 
         try {
             for (let key in data) {
+
                 let temp = Object.assign({}, data[key], {'PROPERTY' : key});
 
                 Log.printLog(this.log_tag, "init() - key : " + key + ", value : " + JSON.stringify(temp));
-                if (!temp.CATEGORY || !temp.TYPE || temp.VALUE === undefined || temp.VALUE === null || !temp.USE) {
+                if (!temp.CATEGORY || !temp.TYPE || temp.VALUE === undefined || temp.VALUE === null) {
                     continue;
                 }
                 if (!this.menu_map[temp.CATEGORY]) {
@@ -63,15 +68,27 @@ class DataManager {
         return this.menu_map;
     }
 
-    getDetailData(index) {
-        let ret_arr = this.getKeyArray();
-        // [si.mun] key값을 저장하고있는 array에서 인자로 전달받은 index에 해당하는 key를 반한해준다.
-        return this.menu_map[ret_arr[index]];
+    getDetailData(category) {
+        let result = JSON.parse(JSON.stringify( this.menu_map ));
+
+        if (!category) {
+            return result[this.getKeyArray()[0]];
+        }
+        return result[category];
     }
 
-    getPopupData(detail_index, popup_index) {
-        let detail_data = this.getDetailData(detail_index);
-        return detail_data[popup_index];
+    setDetailData(args) {
+        let focused_view_Index = args.focused_detail_view_Index;
+        let changed_arr = this.menu_map[args.category]; //DEBUG_MODE1 or DEBUG_MODE2가 추출됨.
+
+        if (changed_arr[focused_view_Index].USE !== args.changed_use)
+            changed_arr[focused_view_Index].USE = args.changed_use;
+
+        if (changed_arr[focused_view_Index].VALUE !== args.changed_value) {
+            changed_arr[focused_view_Index].VALUE = args.changed_value;
+        }
+
+
     }
 }
 export default new DataManager();

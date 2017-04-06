@@ -34,7 +34,6 @@ export default function (state = initialState, action) {
                 cur_page: 0,
                 focused_Index: 0,
                 selected_index: 0,
-                is_focus: false
             });
         case UP_CONTENT:
             if(!is_focus) {

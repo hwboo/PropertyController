@@ -26,6 +26,7 @@
     width:500px;
     height:50px;
     margin-top:5px;
+    /*border-bottom: 1px solid black;*/
 }
 
 .content_key{
@@ -48,9 +49,9 @@
     position: absolute;
     width:100px;
     height: 40px;
-    top:12px;
+    left:50px;
     text-align: center;
-    background-color: rgb(153,151,150);
+    background-color: rgb(100,100,100);
     font-size: 17px;
     color: white;
 }
@@ -59,10 +60,20 @@
     position: absolute;
     width:100px;
     height:40px;
-    left:90px;
-    top:12px;
+    left:150px;
     text-align: center;
     background-color: #4d0b0a;
+    font-size: 17px;
+    color: white;
+}
+
+.toggle_btn {
+    position: absolute;
+    width:100px;
+    height: 40px;
+    left:100px;
+    text-align: center;
+    background-color: rgb(100,100,100);
     font-size: 17px;
     color: white;
 }
@@ -71,4 +82,24 @@
     position: absolute;
     top: 7px;
     left: 26px;
+}
+
+.selected {
+    position: absolute;
+    width:305px;
+    top:10px;
+    left:180px;
+    font-size: 28px;
+    background-color: blanchedalmond;
+}
+
+.btn_left_selected {
+    position: absolute;
+    width:100px;
+    height: 40px;
+    left:50px;
+    text-align: center;
+    background-color: rgb(153,151,150);
+    font-size: 17px;
+    color: white;
 }

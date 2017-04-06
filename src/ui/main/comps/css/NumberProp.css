@@ -42,4 +42,49 @@
     top:10px;
     left:180px;
     font-size: 24px;
+    border: 0px;
+    background-color: inherit;
+}
+
+.toggle_btn {
+    position: absolute;
+    width:100px;
+    height: 40px;
+    left:100px;
+    text-align: center;
+    background-color: rgb(100,100,100);
+    font-size: 17px;
+    color: white;
+}
+
+.btn_txt {
+    position: absolute;
+    top: 7px;
+    left: 0px;
+    width:100px;
+}
+
+
+.input_txt{
+    position: absolute;
+    width:305px;
+    top:5px;
+    left:0px;
+    text-align: center;
+    background-color: inherit;
+    border: 0px;
+    font-size: 24px;
+}
+
+.selected {
+    position: absolute;
+    width:305px;
+    top:5px;
+    left:180px;
+    font-size: 28px;
+    background-color: blanchedalmond;
+}
+
+.selected .input_txt{
+    font-size: 28px;
 }

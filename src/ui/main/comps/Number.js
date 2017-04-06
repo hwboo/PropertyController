@@ -6,23 +6,18 @@ class NumberPopupProp extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            _use : props.use,
+            _value : props.value
+        };
     }
 
     render() {
-        let style = {};
-
-        if(this.props.focus) {
-            style.backgroundColor = 'blue';
-        }
-        if( this.props.select ) {
-            style.color = 'red';
-        }
-
         /* data ==> { CATEGORY, TYPE, VALUE, DES, USE, PROPERTY } */
         return (
             <div className={css.popup_class_item}>
                 <div className={css.popup_title}>
-                    <span>{this.props.data.PROPERTY}</span>
+                    <span>{this.props.property}</span>
                 </div>
 
                 <div className={css.number}>
@@ -31,11 +26,10 @@ class NumberPopupProp extends Component {
                             <span>DES : </span>
                         </div>
 
-                        <div className={css.content_value}>
-                            <span>{this.props.data.DES} </span>
+                        <div className={this.props.focus === 0 ? css.selected : css.content_value}>
+                            <span>{this.props.des} </span>
                         </div>
                     </div>
-
 
                     <div className={css.popup_content}>
                         <div className={css.content_key}>
@@ -43,7 +37,9 @@ class NumberPopupProp extends Component {
                         </div>
 
                         <div className={css.content_value}>
-                            <span>{this.props.data.USE? "TRUE" : "FALSE"} </span>
+                            <div className={css.toggle_btn} style={{ opacity : this.props.focus === 1 ? 1 : 0.5 }}>
+                                <span className={css.btn_txt}>{this.props.use? "USE" : "NOT USE"}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -52,8 +48,8 @@ class NumberPopupProp extends Component {
                             <span>VALUE : </span>
                         </div>
 
-                        <div className={css.content_value}>
-                            <span>{this.props.data.VALUE} </span>
+                        <div className={this.props.focus === 2 ? css.selected : css.content_value}>
+                            <span>{this.props.value}</span>
                         </div>
                     </div>
                 </div>

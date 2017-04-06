@@ -1,5 +1,5 @@
 "use strict";
-import {UP_PROPERTY, DOWN_PROPERTY, LEFT_PROPERTY, RIGHT_PROPERTY, SET_FOCUS_POPUP} from '../actions/ActionPopup';
+import {SET_POPUP_INFO, UP_PROPERTY, DOWN_PROPERTY, LEFT_PROPERTY, RIGHT_PROPERTY} from '../actions/ActionPopup';
 
 /**
  * Created by si.mun on 2017-03-31.
@@ -19,6 +19,8 @@ export default function (state = initialState, action) {
     let where = "";
 
     switch(action.type) {
+        case SET_POPUP_INFO :
+            return Object.assign({}, state, initialState);
         case UP_PROPERTY :
             if (focused_Index - 1 < 0 ) {
                 focused_Index = 3;
@@ -35,7 +37,7 @@ export default function (state = initialState, action) {
             }
             return Object.assign({}, state, {focused_Index : focused_Index});
         case LEFT_PROPERTY :
-            if (focused_Index === 2 || focused_Index === 3) {
+            if (focused_Index === 3) {
                 if ( btn_focus === "left" ) {
                     where = "right";
                 }
@@ -45,7 +47,7 @@ export default function (state = initialState, action) {
                 return Object.assign({}, state, {btn_focus : where});
             }
         case RIGHT_PROPERTY :
-            if (focused_Index === 2 || focused_Index === 3) {
+            if (focused_Index === 3) {
                 if ( btn_focus === "right" ) {
                     where = "left";
                 }

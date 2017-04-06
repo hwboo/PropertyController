@@ -22,7 +22,7 @@ class StringPopupProp extends Component {
         return (
             <div className={css.popup_class_item}>
                 <div className={css.popup_title}>
-                    <span>{this.props.data.PROPERTY}</span>
+                    <span>{this.props.property}</span>
                 </div>
 
                 <div className={css.string}>
@@ -31,11 +31,10 @@ class StringPopupProp extends Component {
                             <span>DES : </span>
                         </div>
 
-                        <div className={css.content_value}>
-                            <span>{this.props.data.DES} </span>
+                        <div className={this.props.focus === 0 ? css.selected : css.content_value}>
+                            <span>{this.props.des} </span>
                         </div>
                     </div>
-
 
                     <div className={css.popup_content}>
                         <div className={css.content_key}>
@@ -43,7 +42,9 @@ class StringPopupProp extends Component {
                         </div>
 
                         <div className={css.content_value}>
-                            <span>{this.props.data.USE? "TRUE" : "FALSE"} </span>
+                            <div className={css.toggle_btn} style={{ opacity : this.props.focus === 1 ? 1 : 0.5 }}>
+                                <span className={css.btn_txt}>{this.props.use? "USE" : "NOT USE"}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -52,8 +53,8 @@ class StringPopupProp extends Component {
                             <span>VALUE : </span>
                         </div>
 
-                        <div className={css.content_value}>
-                            <span>{this.props.data.VALUE} </span>
+                        <div className={this.props.focus === 2 ? css.selected : css.content_value}>
+                            <span>{this.props.value}</span>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,8 @@ import Content from "../comps/Content";
 import PropertyPopup from "../popup/PropertyPopup";
 
 const TYPE = {
-    UNFOCUS: "UNFOCUS"
+    UNFOCUS: "UNFOCUS",
+    CHANGE_PROPERTY: "CHANGE_PROPERTY"
 };
 
 class MenuDetailView extends View {
@@ -59,19 +60,32 @@ class MenuDetailView extends View {
         return (
             <div style={style}>
                 {properties}
-                {/*<PropertyPopup is_popup_show={this.props.properties_info.is_popup_show}*/}
-                               {/*data={data[this.props.properties_info.selected_index]}/>*/}
             </div>
         );
     }
 
-    notifyFromPopup(data) {
-        this.removePopup(data.popup_id);
+    notifyFromPopup(args) {
+
+        if (args.type === "CHANGE_PROPERTY") {
+            let focused_view_Index = this.props.properties_info.focused_Index;
+
+            this.props.callback({
+                type: args.type,
+                view_id: this.props.id,
+                focused_detail_view_Index : focused_view_Index,
+                category: args.category,
+                changed_use: args.changed_use,
+                changed_value: args.changed_value
+            });
+        }
+        this.removePopup(args.popup_id);
     }
 
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
+        let data = this.props.data;
+        let prop_list_info = this.props.properties_info;
 
         switch(key_code) {
             case KEY.UP :
@@ -85,14 +99,11 @@ class MenuDetailView extends View {
                 this.props.callback({
                     type: TYPE.UNFOCUS,
                     view_id: this.props.id,
-                    focused_Index: this.props.properties_info.focused_Index
+                    category: data[prop_list_info.focused_Index].CATEGORY
                 });
                 return true;
             case KEY.ENTER :
-                let data = this.props.data;
-                let prop_list_info = this.props.properties_info;
                 let focused_index = prop_list_info.focused_Index;
-
                 this.addPopup(PropertyPopup, data[focused_index], 0);
                 return true;
         }

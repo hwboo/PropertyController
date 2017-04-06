@@ -22,7 +22,7 @@ class BooleanPopupProp extends Component {
         return (
             <div className={css.popup_class_item}>
                 <div className={css.popup_title}>
-                    <span>{this.props.data.PROPERTY}</span>
+                    <span>{this.props.property}</span>
                 </div>
 
                 <div className={css.boolean}>
@@ -31,8 +31,8 @@ class BooleanPopupProp extends Component {
                             <span>DES : </span>
                         </div>
 
-                        <div className={css.content_value}>
-                            <span>{this.props.data.DES} </span>
+                        <div className={this.props.focus === 0 ? css.selected : css.content_value}>
+                            <span>{this.props.des} </span>
                         </div>
                     </div>
 
@@ -42,7 +42,9 @@ class BooleanPopupProp extends Component {
                         </div>
 
                         <div className={css.content_value}>
-                            <span>{this.props.data.USE? "TRUE" : "FALSE"} </span>
+                            <div className={css.toggle_btn} style={{ opacity : this.props.focus === 1 ? 1 : 0.5 }}>
+                                <span className={css.btn_txt} style={{width:100 + 'px', left: 0 + 'px'}}>{this.props.use? "USE" : "NOT USE"}</span>
+                            </div>
                         </div>
                     </div>
 
@@ -52,11 +54,8 @@ class BooleanPopupProp extends Component {
                         </div>
 
                         <div className={css.content_value}>
-                            <div className={css.left_btn}>
-                                <span className={css.btn_txt}>TRUE</span>
-                            </div>
-                            <div className={css.right_btn}>
-                                <span className={css.btn_txt}>FALSE</span>
+                            <div className={css.toggle_btn} style={{ opacity : this.props.focus === 2 ? 1 : 0.5 }}>
+                                <span className={css.btn_txt}>{this.props.value === "TRUE"? "TRUE" : "FALSE"}</span>
                             </div>
                         </div>
                     </div>

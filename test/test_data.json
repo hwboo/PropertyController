@@ -4,7 +4,7 @@
     "TYPE": "Boolean",
     "VALUE": false,
     "DES": "APP_DEBUG_MODE",
-    "USE": true
+    "USE": false
   },
   "TEST_2": {
     "CATEGORY": "DEBUG_MODE1",
@@ -18,7 +18,7 @@
     "TYPE": "Boolean",
     "VALUE": false,
     "DES": "APP_DEBUG_MODE",
-    "USE": true
+    "USE": false
   },
   "TEST_4": {
     "CATEGORY": "DEBUG_MODE2",
