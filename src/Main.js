@@ -41,7 +41,10 @@ class Main {
     start() {
         Log.printLog(this.log_tag, "called start()");
         UIManager.start();
+    }
 
+    exit(res_code, data) {
+        this.listener(res_code, data);
     }
 }
 export default new Main();
