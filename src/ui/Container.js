@@ -30,6 +30,10 @@ class Container extends Component {
         UIManager.removeKeyListener(this.props.id, this.handleKeyEvent);
     }
 
+    removeLayer(layer_id) {
+        UIManager.removeLayer(layer_id);
+    }
+
     handleKeyEvent(event) {
         return false;
     }

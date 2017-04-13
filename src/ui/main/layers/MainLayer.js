@@ -6,7 +6,7 @@ import KEY from "../../../common/KeyDef";
 import DataManager from "../../../manager/DataManager";
 import MenuListView from "../views/MenuListView";
 import MenuDetailView from "../views/MenuDetailView";
-import PropertyPopup from "../popup/PropertyPopup";
+import MenuSaveView from "../views/MenuSaveView";
 
 /**
  * @fileoverview
@@ -25,6 +25,7 @@ class MainLayer extends Layer {
         super.componentWillMount();
         this.menu_list_id = this.addView(MenuListView, DataManager.getMenuData(), true);
         this.menu_detail_id = this.addView(MenuDetailView, DataManager.getDetailData(), false);
+        this.menu_saved_id = this.addView(MenuSaveView, "", false);
     }
 
     render() {
@@ -57,14 +58,32 @@ class MainLayer extends Layer {
                     focused_detail_view_Index : data.focused_detail_view_Index, // detail view에서 몇번째 property인지 알려줌
                     category: data.category,
                     changed_use: data.changed_use,
-                    changed_value: data.changed_value
+                    changed_value: data.changed_value,
+                    changed_value_list: data.changed_value_list
                 });
 
                 this.updateView(data.view_id, DataManager.getDetailData(data.category));
             }
+            else if (MenuDetailView.TYPE.UNFOCUS_TO_SAVE === type) {
+                this.setFocusView(this.menu_detail_id, false);
+                this.setFocusView(this.menu_saved_id, true);
+            }
+        }
+        else if (this.menu_saved_id === data.view_id) {
+            if (MenuSaveView.TYPE.SAVE === type) { // Property 최종 저장
+                DataManager.saveProperties();
+                this.setFocusView(this.menu_detail_id, true);
+                this.setFocusView(this.menu_saved_id, false);
+
+            } else if (MenuSaveView.TYPE.UNFOCUS === type) { // Left 버튼
+                this.setFocusView(this.menu_detail_id, true);
+                this.setFocusView(this.menu_saved_id, false);
+
+            } else if (MenuSaveView.TYPE.TERMINATE === type){ // 종료
+                this.removeLayer("MainLayer_0");
+            }
         }
     }
-
 
     handleKeyEvent(event) {
         this.printLog("called handleKeyEvent() - " + event.keyCode);

@@ -13,6 +13,15 @@
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+.popup_area {
+    position: absolute;
+    top: 50px;
+    left: 170px;
+    width: 500px;
+    height: 300px;
+    background-color: darkgrey;
+}
+
 .btn_box {
     position: absolute;
     top:230px;

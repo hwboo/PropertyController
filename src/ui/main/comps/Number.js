@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import css from './css/NumberProp.css';
 
-class NumberPopupProp extends Component {
+class Number extends Component {
 
     constructor(props) {
         super(props);
@@ -58,4 +58,4 @@ class NumberPopupProp extends Component {
         );
     }
 }
-export default NumberPopupProp;
+export default Number;

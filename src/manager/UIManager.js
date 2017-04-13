@@ -36,18 +36,18 @@ class UIManager {
      */
     start() {
         Log.printLog(this.log_tag, "called start()");
-        window.focus();
+        // window.focus();
         this.store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
         this.addLayer(MainLayer);
         this._render();
-        document.addEventListener("keydown", this.handleKeyEvent);
+        // document.addEventListener("keydown", this.handleKeyEvent);
     }
 
     /**
      * Destroy UIManager
      */
     destroy() {
-        document.removeEventListener("keydown", this.handleKeyEvent);
+        // document.removeEventListener("keydown", this.handleKeyEvent);
     }
 
     /**

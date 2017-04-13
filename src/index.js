@@ -1,6 +1,8 @@
 "use strict";
 import Interface from './Interface';
 import TestData from '../test/test_data.json';
+import "babel-polyfill";
+
 /**
  * @fileoverview
  * @author hw.boo on 2017-02-17.

@@ -7,11 +7,22 @@ import {SET_CONTENTS, UP_CONTENT, DOWN_CONTENT, SET_FOCUS_CONTENT} from '../acti
  * @version
  * <p>Copyright (c) 1997-2015 Alticast, Inc. All rights reserved.
  */
+function calTotalPage(total_item, page_per_item) {
+    let quotient = parseInt(total_item / page_per_item);
+    let remainder = total_item % page_per_item;
+
+    if (remainder === 0) {
+        return quotient;
+    } else {
+        return ++quotient;
+    }
+}
+
 const initialState = {
     total_item: 0,
     page_per_item: 0,
-    total_page: 0,
-    cur_page: 0,
+    total_page: 1,
+    cur_page: 1,
     focused_Index: 0,
     selected_index: 0,
     is_focus: false
@@ -30,8 +41,8 @@ export default function (state = initialState, action) {
             return Object.assign({}, state, {
                 total_item: action.payload.total_item,
                 page_per_item: action.payload.page_per_item,
-                total_page: parseInt(action.payload.total_item / action.payload.page_per_item),
-                cur_page: 0,
+                total_page: calTotalPage(action.payload.total_item, action.payload.page_per_item),
+                cur_page: 1,
                 focused_Index: 0,
                 selected_index: 0,
             });
@@ -40,12 +51,19 @@ export default function (state = initialState, action) {
                 return state;
             }
             if (--focused_Index < 0) {
-                if (cur_page === 0) {
+                if (cur_page === 1) {
                     cur_page = total_page;
-                    focused_Index = total_item % page_per_item - 1;
+                    focused_Index = total_item % page_per_item;
+
+                    if (focused_Index === 0) {
+                        focused_Index = page_per_item - 1;
+                    }
+                    else
+                        focused_Index--;
+
                 } else {
                     cur_page--;
-                    focused_Index = page_per_item;
+                    focused_Index = page_per_item - 1;
                 }
             }
             return Object.assign({}, state, {
@@ -57,10 +75,10 @@ export default function (state = initialState, action) {
             if(!is_focus) {
                 return state;
             }
-            let cur_index = page_per_item * cur_page + focused_Index;
-            if (++focused_Index > page_per_item || ++cur_index > total_item - 1) {
+            let cur_index = page_per_item * (cur_page - 1) + focused_Index;
+            if (++focused_Index >= page_per_item || ++cur_index > total_item - 1) {
                 if (cur_page === total_page) {
-                    cur_page = 0;
+                    cur_page = 1;
                 } else {
                     cur_page++;
                 }

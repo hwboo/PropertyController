@@ -29,7 +29,6 @@ class DataManager {
     init(data) {
         Log.printLog(this.log_tag, "called init() - data : " + data);
 
-        this.origin_properties = data;
         let result = false;
         let index = 0;
 
@@ -54,6 +53,8 @@ class DataManager {
             if (Object.keys(this.menu_map).length > 0) {
                 result = true;
             }
+
+            Object.assign(this.origin_properties, this.menu_map);
         } catch (e) {
             Log.printLog(this.log_tag, "init() - failed menu data init");
         }
@@ -88,7 +89,15 @@ class DataManager {
             changed_arr[focused_view_Index].VALUE = args.changed_value;
         }
 
+        if (changed_arr[focused_view_Index].VALUE_LIST
+            && changed_arr[focused_view_Index].VALUE_LIST != args.changed_value_list) {
+            changed_arr[focused_view_Index].VALUE_LIST = args.changed_value_list;
+        }
+    }
 
+    saveProperties() {
+
+        // 저장이면 menu_map return? 아니면 original_properties return?
     }
 }
 export default new DataManager();

@@ -1,0 +1,14 @@
+#scroll_bg{
+    position: absolute;
+    width: 2px;
+    height: 400px;
+    top: 0px;
+    left:590px;
+    background-color: rgb(128,128,128);
+}
+
+#scroll_bar{
+    position: absolute;
+    width: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+}

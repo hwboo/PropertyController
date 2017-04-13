@@ -1,5 +1,6 @@
 "use strict";
 import Main from "./Main";
+import UIManager from './manager/UIManager';
 import Log from './utils/Log';
 import Config from './common/Config'
 
@@ -66,6 +67,9 @@ class Interface {
         Config.APP_MODE = app_mode;
     }
 
+    sendKeyEvent(event) {
+        UIManager.handleKeyEvent(event);
+    }
     /**
      * 결과 코드를 반환한다.
      *
@@ -85,5 +89,6 @@ class Interface {
     get APP_MODE() {
         return APP_MODE;
     }
+
 }
 export default new Interface();

@@ -9,25 +9,75 @@
   "TEST_2": {
     "CATEGORY": "DEBUG_MODE1",
     "TYPE": "Number",
-    "VALUE": 5,
+    "VALUE": 7,
     "DES": "APP_DEBUG_MODE",
     "USE": true
   },
   "TEST_3": {
+    "CATEGORY": "DEBUG_MODE1",
+    "TYPE": "String",
+    "VALUE": "STRING_TEST",
+    "DES": "TEST",
+    "USE": true
+  },
+  "TEST_4": {
+    "CATEGORY": "DEBUG_MODE1",
+    "TYPE": "List",
+    "VALUE": "A",
+    "VALUE_LIST": ["B", "C", "D", "E"],
+    "DES": "LIST_TEST",
+    "USE": true
+  },
+  "TEST_5": {
+    "CATEGORY": "DEBUG_MODE1",
+    "TYPE": "Boolean",
+    "VALUE": false,
+    "DES": "APP_DEBUG_MODE",
+    "USE": false
+  },
+  "TEST_6": {
+    "CATEGORY": "DEBUG_MODE1",
+    "TYPE": "String",
+    "VALUE": "STRING_TEST",
+    "DES": "TEST",
+    "USE": true
+  },
+  "TEST_7": {
+    "CATEGORY": "DEBUG_MODE1",
+    "TYPE": "String",
+    "VALUE": "STRING_TEST",
+    "DES": "TEST",
+    "USE": true
+  },
+  "TEST_8": {
     "CATEGORY": "DEBUG_MODE2",
     "TYPE": "Boolean",
     "VALUE": false,
     "DES": "APP_DEBUG_MODE",
     "USE": false
   },
-  "TEST_4": {
+  "TEST_9": {
     "CATEGORY": "DEBUG_MODE2",
     "TYPE": "Number",
     "VALUE": 7,
     "DES": "APP_DEBUG_MODE",
     "USE": true
   },
-  "TEST_5": {
+  "TEST_10": {
+    "CATEGORY": "DEBUG_MODE2",
+    "TYPE": "String",
+    "VALUE": "STRING_TEST",
+    "DES": "TEST",
+    "USE": true
+  },
+  "TEST_11": {
+    "CATEGORY": "DEBUG_MODE2",
+    "TYPE": "String",
+    "VALUE": "STRING_TEST",
+    "DES": "TEST",
+    "USE": true
+  },
+  "TEST_12": {
     "CATEGORY": "DEBUG_MODE2",
     "TYPE": "String",
     "VALUE": "STRING_TEST",

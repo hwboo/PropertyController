@@ -3,12 +3,13 @@ import React from "react";
 import Popup from '../../Popup';
 import KEY from "../../../common/KeyDef";
 import {connect} from "react-redux";
-import {setPopupInfo, upProperty, downProperty, leftProperty, rightProperty} from "../../actions/ActionPopup";
+import {setPopupInfo, setListValues, upProperty, upListValue, downProperty, downListValue, leftProperty, rightProperty} from "../../actions/ActionPopup";
 
 import css from "./css/popup.css";
 import String from "../comps/String";
 import Number from "../comps/Number";
 import Boolean from "../comps/Boolean";
+import ListComp from "../comps/ListComp";
 
 const TYPE = {
     CHANGE_PROPERTY: "CHANGE_PROPERTY",
@@ -17,29 +18,43 @@ const TYPE = {
 
 let temp_changed_value = "";
 let temp_changed_use = "";
+let temp_changed_value_list = [];
 
 class PropertyPopup extends Popup {
-
     constructor(props) {
         super(props);
-        console.log(props);
 
         this.state = {
             changed_value : "",
-            changed_use : ""
+            changed_use : "",
+            changed_value_list : props.data.VALUE_LIST,
+            is_value_entered : false,
         };
+
+        if (props.data.TYPE === "List") {
+            temp_changed_value_list = props.data.VALUE_LIST.slice();
+        }
+    }
+
+    componentWillMount() {
+        super.componentWillMount();
+
+        if (this.props.data.TYPE === "List") {
+            this.props.setListValues(this.props.data.VALUE_LIST.length, 3);
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        this.printLog("called shouldComponentUpdate() - nextState.changed_value : " + nextState.changed_value + ", this.state.changed_value : " + this.state.changed_value);
+        if (this.props.data.TYPE === "List") {
+            if (nextState.changed_value !== this.state.changed_value) {
+                this.props.setListValues(this.props.data.VALUE_LIST.length, 3);
+            }
+        }
+        return true;
     }
 
     render() {
-        let popup_style = {
-            position: 'absolute',
-            top: '50px',
-            left: '170px',
-            width: '500px',
-            height: '300px',
-            backgroundColor: 'darkgrey',
-        }
-
         let prop_content = null;
         let focus = this.props.focus_info.focused_Index;
         let save_btn_focus = this.props.focus_info.btn_focus; // toggle_btn 사용은 나중에 생각해보자. 지금은 Enter 때마다 toggle 되도록 구현됨
@@ -71,6 +86,41 @@ class PropertyPopup extends Popup {
                                         use={this.state.changed_use === "" ? origin_use : this.state.changed_use}
                                         value={this.state.changed_value === "" ? (origin_value? "TRUE" : "FALSE") : this.state.changed_value}/>;
                 break;
+            case 'List' :
+                let value_list_data = [];
+                let state_value_list = this.state.changed_value_list;
+                // alert(this.state.changed_value_list);
+
+                if (this.state.is_value_entered) {
+                    let value_list_info = this.props.focus_info;
+                    let cur_list_page = value_list_info.cur_list_page;
+                    let page_per_list_item = value_list_info.page_per_list_item;
+                    let count = 0;
+
+                    for(let data of state_value_list) {
+                        if ( count >= (cur_list_page - 1) * page_per_list_item && count < cur_list_page * page_per_list_item) {
+                            value_list_data.push(data);
+                        }
+                        count++;
+                    }
+                }
+
+                prop_content = <ListComp key={this.props.data.PROPERTY}
+                                       property={this.props.data.PROPERTY}
+                                       focus={focus}
+                                       des={this.props.data.DES}
+                                       use={this.state.changed_use === "" ? origin_use : this.state.changed_use}
+                                       value={this.state.changed_value === "" ? origin_value : this.state.changed_value}
+                                       value_list={value_list_data}
+                                       is_value_entered={this.state.is_value_entered}
+                                       total_page={this.props.focus_info.total_list_page}
+                                       cur_page={this.props.focus_info.cur_list_page}
+                                       list_focus={this.props.focus_info.focused_list_Index}
+                                       height={120}
+                                       left={490}
+                                       top={11}/>;
+
+                break;
             default :
                 this.printLog('Unknown Type Property');
                 break;
@@ -79,11 +129,11 @@ class PropertyPopup extends Popup {
         return (
             <div className={css.popup_container}>
                 <div className={css.dimmed}></div>
-                <div style={popup_style}>
+                <div className={css.popup_area} style={{top : this.state.is_value_entered? 15 + 'px' : 50 + 'px'}}>
 
                     {prop_content}
 
-                    <div className={css.btn_box}>
+                    <div className={css.btn_box} style={{top : this.state.is_value_entered? 300 + 'px' : 230 + 'px'}}>
                         {/*
                             focus === 3           : focus가 btn에 위치해 있을 때
                             btn_focus === "left"  : btn이 left일 때
@@ -109,13 +159,24 @@ class PropertyPopup extends Popup {
         this.printLog("called handleKeyEvent() - " + event.keyCode);
         let key_code = event.keyCode;
         let focus = this.props.focus_info.focused_Index;
+        let is_value_entered = this.state.is_value_entered;
+        let cur_list_page = this.props.focus_info.cur_list_page;
+        let cur_list_focused_Index = this.props.focus_info.focused_list_Index;
 
         switch(key_code) {
             case KEY.UP :
-                this.props.upProperty();
+                if (is_value_entered) {
+                    this.props.upListValue();
+                } else {
+                    this.props.upProperty();
+                }
                 return true;
             case KEY.DOWN :
-                this.props.downProperty();
+                if (is_value_entered) {
+                    this.props.downListValue();
+                } else {
+                    this.props.downProperty();
+                }
                 return true;
             case KEY.LEFT :
                 this.props.leftProperty();
@@ -137,17 +198,48 @@ class PropertyPopup extends Popup {
                         changed_use : temp_changed_use
                     });
 
-                } else if (focus === 2 && this.props.data.TYPE === "Boolean") { //Bolean Type의 value값 변경
-                    if (temp_changed_value === "") {
-                        temp_changed_value = this.props.data.VALUE? "FALSE" : "TRUE";
-                    } else {
-                        temp_changed_value = (temp_changed_value === "TRUE" ? "FALSE" : "TRUE");
+                } else if (focus === 2) { //Boolean, List Type의 value값 변경
+                    if (this.props.data.TYPE === "Boolean") {
+                        if (temp_changed_value === "") {
+                            temp_changed_value = this.props.data.VALUE? "FALSE" : "TRUE";
+                        } else {
+                            temp_changed_value = (temp_changed_value === "TRUE" ? "FALSE" : "TRUE");
+                        }
+
+                        this.setState({
+                            changed_value : temp_changed_value
+                        });
+                    } else if (this.props.data.TYPE === "List") {
+                        if (!this.state.is_value_entered) { //is_value_entered === false이면 value만 보여주는 상태이다.
+                            is_value_entered = true; // is_value_entered를 true로 바꿔서 <ListComp>에서 VALUE_LIST를 보여주도록 하자.
+
+                            this.setState({
+                                is_value_entered : is_value_entered,
+                            })
+                        } else { // VALUE_LIST를 보여주다가 Enter를 눌렀기 때문에 Property값 세팅도 동시에 해주어야 한다.
+                            is_value_entered = false;
+
+                            /*
+                             * VALUE_LIST에서 선택된 값을 VALUE에 보여주고, VALUE에 있던 값을 VALUE_LIST에 삽입하는 과정
+                             */
+
+                            // VALUE_LIST에서 선택된 값을 VALUE에 대입
+                            temp_changed_value = this.state.changed_value_list[(--cur_list_page * 3) + cur_list_focused_Index];
+
+                            // VALUE에 있던 값을 VALUE_LIST에 삽입하고, VALUE_LIST에서 VALUE의 index를 찾은 뒤, VALUE 제거
+                            let data = this.state.changed_value === "" ? this.props.data.VALUE : this.state.changed_value;
+                            // alert(data);
+                            temp_changed_value_list.push(this.state.changed_value === "" ? this.props.data.VALUE : this.state.changed_value);
+                            let value_idx = temp_changed_value_list.indexOf(temp_changed_value);
+                            temp_changed_value_list.splice(value_idx, 1);
+
+                            this.setState({
+                                is_value_entered : is_value_entered,
+                                changed_value : temp_changed_value,
+                                changed_value_list : temp_changed_value_list
+                            })
+                        }
                     }
-
-                    this.setState({
-                        changed_value : temp_changed_value
-                    });
-
                 } else if (focus === 3) {
                     let args = {};
 
@@ -163,13 +255,16 @@ class PropertyPopup extends Popup {
                         temp_changed_value = temp_changed_value === "TRUE" ? true : false;
                     }
 
-                    if (btn_focus === "left") { // 저장버튼
+                    if (btn_focus === "left") { // 저장버
+                        console.log(temp_changed_value_list);
+
                         args = {
                             type: TYPE.CHANGE_PROPERTY,
                             id: this.id,
                             category: this.props.data.CATEGORY,
                             changed_use: temp_changed_use,
                             changed_value: temp_changed_value,
+                            changed_value_list : temp_changed_value_list
                         }
                     }
                     else { // 취소버튼
@@ -181,6 +276,7 @@ class PropertyPopup extends Popup {
 
                     temp_changed_use = "";
                     temp_changed_value = "";
+
                     this.props.callback(args);
                     this.props.setPopupInfo();
                 }
@@ -214,8 +310,11 @@ let mapStateToProps = (state) => {
 let mapDispatchToProps = (dispatch) => {
     return {
         setPopupInfo: () => dispatch(setPopupInfo()),
+        setListValues: (total_list_item, page_per_list_item) => dispatch(setListValues(total_list_item, page_per_list_item)),
         upProperty: () => dispatch(upProperty()),
+        upListValue: () => dispatch(upListValue()),
         downProperty: () => dispatch(downProperty()),
+        downListValue: () => dispatch(downListValue()),
         leftProperty: () => dispatch(leftProperty()),
         rightProperty: () => dispatch(rightProperty()),
     };

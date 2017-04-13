@@ -6,10 +6,12 @@ import View from '../../View';
 import {setContents, upContent, downContent, setFocusContent} from "../../actions/ActionMenuDetail";
 import Content from "../comps/Content";
 import PropertyPopup from "../popup/PropertyPopup";
+import ScrollBar from "../comps/ScrollBar";
 
 const TYPE = {
     UNFOCUS: "UNFOCUS",
-    CHANGE_PROPERTY: "CHANGE_PROPERTY"
+    CHANGE_PROPERTY: "CHANGE_PROPERTY",
+    UNFOCUS_TO_SAVE: "UNFOCUS_TO_SAVE"
 };
 
 class MenuDetailView extends View {
@@ -37,16 +39,32 @@ class MenuDetailView extends View {
     render() {
         let data = this.props.data;
         let prop_list_info = this.props.properties_info;
+        let cur_page = prop_list_info.cur_page;
+        let page_per_item = prop_list_info.page_per_item;
         let properties = [];
+        let cur_item_idx = 0;
         let count = 0;
 
         for (let i in data) {
-            let focus = count === prop_list_info.focused_Index && this.props.is_focus;
-            let select = count === prop_list_info.selected_index && this.props.is_focus;
+            let focus;
 
-            properties.push(<Content key={data[i].PROPERTY} focus={focus} select={select} data={data[i]}/>);
+            if (cur_item_idx === page_per_item) {
+                cur_item_idx = 0;
+            }
+
+            if ( count >= (cur_page - 1) * page_per_item && count < cur_page * page_per_item) {
+                focus = cur_item_idx === prop_list_info.focused_Index && this.props.is_focus;
+                let select = cur_item_idx === prop_list_info.selected_index && this.props.is_focus;
+
+                properties.push(<Content key={data[i].PROPERTY} focus={focus} select={select} data={data[i]}/>);
+            }
+
+            cur_item_idx++;
             count++;
         }
+
+        //Scroll Bar
+        properties.push(<ScrollBar total_page={this.props.properties_info.total_page} cur_page={this.props.properties_info.cur_page}/>);
 
         let style = {
             position: 'absolute',
@@ -75,7 +93,8 @@ class MenuDetailView extends View {
                 focused_detail_view_Index : focused_view_Index,
                 category: args.category,
                 changed_use: args.changed_use,
-                changed_value: args.changed_value
+                changed_value: args.changed_value,
+                changed_value_list : args.changed_value_list
             });
         }
         this.removePopup(args.popup_id);
@@ -100,6 +119,13 @@ class MenuDetailView extends View {
                     type: TYPE.UNFOCUS,
                     view_id: this.props.id,
                     category: data[prop_list_info.focused_Index].CATEGORY
+                });
+                return true;
+            case KEY.RIGHT :
+                this.props.setFocusContent(false);
+                this.props.callback({
+                    type: TYPE.UNFOCUS_TO_SAVE,
+                    view_id: this.props.id,
                 });
                 return true;
             case KEY.ENTER :
@@ -130,29 +156,3 @@ let mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuDetailView);
-
-// if (data[i].type === 'Boolean') {
-//     properties.push(<myBoolean key={data[i].PROPERTY}
-//                                category={data[i].CATEGORY}
-//                                des={data[i].DES}
-//                                propName={data[i].PROPERTY}
-//                                type={data[i].TYPE}
-//                                use={data[i].USE}
-//                                value={data[i].VALUE}/>);
-// } else if (data[i].type === 'Number') {
-//     properties.push(<myNumber key={data[i].PROPERTY}
-//                               category={data[i].CATEGORY}
-//                               des={data[i].DES}
-//                               propName={data[i].PROPERTY}
-//                               type={data[i].TYPE}
-//                               use={data[i].USE}
-//                               value={data[i].VALUE}/>);
-// } else if (data[i].type === 'String'){
-//     properties.push(<myString key={data[i].PROPERTY}
-//                               category={data[i].CATEGORY}
-//                               des={data[i].DES}
-//                               propName={data[i].PROPERTY}
-//                               type={data[i].TYPE}
-//                               use={data[i].USE}
-//                               value={data[i].VALUE}/>);
-// }

@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import css from './css/BooleanProp.css';
 
-class BooleanPopupProp extends Component {
+class Boolean extends Component {
 
     constructor(props) {
         super(props);
@@ -64,4 +64,4 @@ class BooleanPopupProp extends Component {
         );
     }
 }
-export default BooleanPopupProp;
+export default Boolean;
