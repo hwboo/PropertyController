@@ -40,7 +40,7 @@ class UIManager {
         this.store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
         this.addLayer(MainLayer);
         this._render();
-        // document.addEventListener("keydown", this.handleKeyEvent);
+        document.addEventListener("keydown", this.handleKeyEvent);
     }
 
     /**
