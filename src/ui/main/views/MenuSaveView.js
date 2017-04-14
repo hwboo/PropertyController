@@ -21,7 +21,7 @@ class MenuSaveView extends View {
     render() {
         let style = {
             position: 'absolute',
-            background: 'aqua',
+            background: 'rgba(176,196,222,0.5)',
             top: '86px',
             left: '807px',
             width: '200px',

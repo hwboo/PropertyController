@@ -55,9 +55,12 @@ class MenuListView extends View {
             conut++;
         }
         let style = {
-            background: 'green',
+            position: 'absolute',
+            top : '86px',
+            background: 'rgb(245, 245, 245)',
             width: '200px',
-            height: '400px'
+            height: '400px',
+            borderRadius : '5px'
         };
         return (
             <div style={style}>

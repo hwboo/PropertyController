@@ -13,7 +13,7 @@ class Content extends Component {
         let prop_value_display = null;
 
         if(this.props.focus) {
-            style.backgroundColor = 'blue';
+            style.backgroundColor = 'rgb(176, 224, 230)';
         }
         if( this.props.select ) {
             style.color = 'red';

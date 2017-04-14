@@ -29,9 +29,19 @@ class MainLayer extends Layer {
     }
 
     render() {
+        let style = {
+            position : 'absolute',
+            left : '0px',
+            top : '20px',
+            width: '1020px',
+            height: '500px',
+            fontSize : '35px',
+            textAlign : 'center'
+        }
+
         return (
-            <div>
-                <h1>MainLayer</h1>
+            <div style={style}>
+                <span>Property Controller</span>
             </div>
         );
     }

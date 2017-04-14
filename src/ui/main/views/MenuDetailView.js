@@ -68,7 +68,7 @@ class MenuDetailView extends View {
 
         let style = {
             position: 'absolute',
-            background: 'yellow',
+            background: 'rgb(240, 248, 255)',
             top: '86px',
             left: '208px',
             width: '600px',

@@ -36,7 +36,7 @@ class UIManager {
      */
     start() {
         Log.printLog(this.log_tag, "called start()");
-        // window.focus();
+        window.focus();
         this.store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
         this.addLayer(MainLayer);
         this._render();
@@ -47,7 +47,7 @@ class UIManager {
      * Destroy UIManager
      */
     destroy() {
-        // document.removeEventListener("keydown", this.handleKeyEvent);
+        document.removeEventListener("keydown", this.handleKeyEvent);
     }
 
     /**
@@ -211,6 +211,12 @@ class UIManager {
             if (this.key_listener[layer.id](event)) {
                 return;
             }
+        }
+        if (event.preventDefault) {
+            event.preventDefault();
+        }
+        if (event.stopPropagation) {
+            event.stopPropagation();
         }
     }
 }

@@ -10,11 +10,11 @@ class Button extends Component {
             width: '200px',
             height: '50px',
             textAlign: 'center',
-            fontSize: '39px'
+            fontSize: '30px'
         };
 
         if (this.props.focus) {
-            _style.backgroundColor = 'blue';
+            _style.backgroundColor = 'rgb(176, 224, 230)';
         } else {
             _style.backgroundColor = 'inherit';
         }
