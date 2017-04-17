@@ -1,5 +1,5 @@
 "use strict";
-import {SET_POPUP_INFO, SET_LIST_VALUES, UP_PROPERTY, UP_LIST_VALUE, DOWN_PROPERTY, DOWN_LIST_VALUE, LEFT_PROPERTY, RIGHT_PROPERTY} from '../actions/ActionPopup';
+import {SET_POPUP_INFO, SET_LIST_VALUES, UP_PROPERTY, UP_LIST_VALUE, DOWN_PROPERTY, DOWN_LIST_VALUE, LEFT_PROPERTY, RIGHT_PROPERTY, DESTROY_POPUP} from '../actions/ActionPopup';
 
 /**
  * Created by si.mun on 2017-03-31.
@@ -43,12 +43,11 @@ export default function (state = initialState, action) {
     let cur_list_page = state.cur_list_page;
     let focused_list_Index = state.focused_list_Index;
 
-
-
-
     switch(action.type) {
         case SET_POPUP_INFO :
             return Object.assign({}, state, initialState);
+        case DESTROY_POPUP :
+            return [];
         case UP_PROPERTY :
             if (focused_Index - 1 < 0 ) {
                 focused_Index = 3;

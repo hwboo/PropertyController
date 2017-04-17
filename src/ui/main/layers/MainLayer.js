@@ -7,6 +7,7 @@ import DataManager from "../../../manager/DataManager";
 import MenuListView from "../views/MenuListView";
 import MenuDetailView from "../views/MenuDetailView";
 import MenuSaveView from "../views/MenuSaveView";
+import Main from "../../../Main";
 
 /**
  * @fileoverview
@@ -81,7 +82,7 @@ class MainLayer extends Layer {
         }
         else if (this.menu_saved_id === data.view_id) {
             if (MenuSaveView.TYPE.SAVE === type) { // Property 최종 저장
-                DataManager.saveProperties();
+                DataManager.setProperties();
                 this.setFocusView(this.menu_detail_id, true);
                 this.setFocusView(this.menu_saved_id, false);
 
@@ -90,7 +91,8 @@ class MainLayer extends Layer {
                 this.setFocusView(this.menu_saved_id, false);
 
             } else if (MenuSaveView.TYPE.TERMINATE === type){ // 종료
-                this.removeLayer("MainLayer_0");
+                this.removeLayer(this.props.id);
+                Main.exit(PC.Interface.RES_CODE.CANCEL, DataManager.getProperties());
             }
         }
     }

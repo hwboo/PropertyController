@@ -3,7 +3,7 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import KEY from "../../../common/KeyDef";
 import View from '../../View';
-import {setInit, changeButton, setSaveFocus} from "../../actions/ActionMenuSave";
+import {setInit, changeButton, setSaveFocus, destroy} from "../../actions/ActionMenuSave";
 import Button from "../comps/Button";
 
 const TYPE = {
@@ -18,6 +18,10 @@ class MenuSaveView extends View {
         this.props.setSaveFocus(this.is_focus);
     }
 
+    componentWillUnmount () {
+        this.props.destroy();
+    }
+
     render() {
         let style = {
             position: 'absolute',
@@ -25,7 +29,7 @@ class MenuSaveView extends View {
             top: '86px',
             left: '807px',
             width: '200px',
-            height: '400px',
+            height: '430px',
         };
 
         let btn_style = {
@@ -59,7 +63,7 @@ class MenuSaveView extends View {
             case KEY.UP :
             case KEY.DOWN :
                 this.props.changeButton();
-                break;
+                return true;
             case KEY.LEFT :
                 this.props.setSaveFocus(false);
                 this.props.setInit();
@@ -68,7 +72,7 @@ class MenuSaveView extends View {
                     type: TYPE.UNFOCUS,
                     view_id: this.props.id
                 });
-                break;
+                return true;
             case KEY.ENTER :
                 if (focused_Index === 0) { // 저장
                     this.props.callback({
@@ -81,8 +85,7 @@ class MenuSaveView extends View {
                         view_id: this.props.id
                     });
                 }
-                // 저장... redux 어떻게???
-                break;
+                return true;
         }
     }
 
@@ -101,7 +104,8 @@ let mapDispatchToProps = (dispatch) => {
     return {
         setInit: () => dispatch(setInit()),
         changeButton: () => dispatch(changeButton()),
-        setSaveFocus: (is_focus) => dispatch(setSaveFocus(is_focus))
+        setSaveFocus: (is_focus) => dispatch(setSaveFocus(is_focus)),
+        destroy: () => dispatch(destroy())
     };
 };
 

@@ -1,5 +1,5 @@
 "use strict";
-import {SET_INIT, CHANGE_BUTTON, SET_SAVE_FOCUS} from '../actions/ActionMenuSave';
+import {SET_INIT, CHANGE_BUTTON, SET_SAVE_FOCUS, DESTROY_SAVE_VIEW} from '../actions/ActionMenuSave';
 
 const initialState = {
     focused_Index: 0,
@@ -12,6 +12,8 @@ export default function (state = initialState, action) {
     switch(action.type) {
         case SET_INIT :
             return Object.assign({}, state, initialState);
+        case DESTROY_SAVE_VIEW :
+            return [];
         case CHANGE_BUTTON :
             if (focused_Index === 0) {
                 focused_Index = 1;

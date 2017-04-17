@@ -3,7 +3,7 @@ import React from "react";
 import Popup from '../../Popup';
 import KEY from "../../../common/KeyDef";
 import {connect} from "react-redux";
-import {setPopupInfo, setListValues, upProperty, upListValue, downProperty, downListValue, leftProperty, rightProperty} from "../../actions/ActionPopup";
+import {setPopupInfo, setListValues, upProperty, upListValue, downProperty, downListValue, leftProperty, rightProperty, destroy} from "../../actions/ActionPopup";
 
 import css from "./css/popup.css";
 import String from "../comps/String";
@@ -29,11 +29,14 @@ class PropertyPopup extends Popup {
             changed_use : "",
             changed_value_list : props.data.VALUE_LIST,
             is_value_entered : false,
+            is_popup_destroyed : false,
         };
 
         if (props.data.TYPE === "List") {
             temp_changed_value_list = props.data.VALUE_LIST.slice();
         }
+
+        this.props.setPopupInfo();
     }
 
     componentWillMount() {
@@ -89,7 +92,6 @@ class PropertyPopup extends Popup {
             case 'List' :
                 let value_list_data = [];
                 let state_value_list = this.state.changed_value_list;
-                // alert(this.state.changed_value_list);
 
                 if (this.state.is_value_entered) {
                     let value_list_info = this.props.focus_info;
@@ -226,9 +228,6 @@ class PropertyPopup extends Popup {
                             // VALUE_LIST에서 선택된 값을 VALUE에 대입
                             temp_changed_value = this.state.changed_value_list[(--cur_list_page * 3) + cur_list_focused_Index];
 
-                            // VALUE에 있던 값을 VALUE_LIST에 삽입하고, VALUE_LIST에서 VALUE의 index를 찾은 뒤, VALUE 제거
-                            let data = this.state.changed_value === "" ? this.props.data.VALUE : this.state.changed_value;
-                            // alert(data);
                             temp_changed_value_list.push(this.state.changed_value === "" ? this.props.data.VALUE : this.state.changed_value);
                             let value_idx = temp_changed_value_list.indexOf(temp_changed_value);
                             temp_changed_value_list.splice(value_idx, 1);
@@ -255,8 +254,7 @@ class PropertyPopup extends Popup {
                         temp_changed_value = temp_changed_value === "TRUE" ? true : false;
                     }
 
-                    if (btn_focus === "left") { // 저장버
-                        console.log(temp_changed_value_list);
+                    if (btn_focus === "left") { // 저장버튼
 
                         args = {
                             type: TYPE.CHANGE_PROPERTY,
@@ -279,6 +277,11 @@ class PropertyPopup extends Popup {
 
                     this.props.callback(args);
                     this.props.setPopupInfo();
+
+                    // componnentWillUnmount에 destory를 넣었을 시에,
+                    // Enter Event보다 ComponentWillUnmount가 먼저 실행되기 때문에 resource 해제가 이뤄지지 않음.
+                    // 때문에 View와는 다르게 저장, 취소버튼을 눌렀을 시에 destroy가 되게끔 구현함
+                    this.props.destroy();
                 }
                 return true;
             default :
@@ -317,6 +320,7 @@ let mapDispatchToProps = (dispatch) => {
         downListValue: () => dispatch(downListValue()),
         leftProperty: () => dispatch(leftProperty()),
         rightProperty: () => dispatch(rightProperty()),
+        destroy: () => dispatch(destroy())
     };
 };
 

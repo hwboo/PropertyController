@@ -212,12 +212,6 @@ class UIManager {
                 return;
             }
         }
-        if (event.preventDefault) {
-            event.preventDefault();
-        }
-        if (event.stopPropagation) {
-            event.stopPropagation();
-        }
     }
 }
 

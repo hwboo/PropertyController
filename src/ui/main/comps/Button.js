@@ -5,7 +5,7 @@ class Button extends Component {
     render() {
         let _style = {
             position: 'absolute',
-            top: '15px',
+            top: '52px',
             left: '0px',
             width: '200px',
             height: '50px',

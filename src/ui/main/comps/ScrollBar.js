@@ -9,7 +9,7 @@ class ScrollBar extends Component {
     }
 
     render() {
-        let _height = (this.props.height? this.props.height : 400);
+        let _height = (this.props.height? this.props.height : 430);
         let _left = (this.props.left? this.props.left : 590);
 
         let scroll_height = _height / (this.props.total_page);

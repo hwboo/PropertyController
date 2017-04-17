@@ -12,6 +12,7 @@ export const DOWN_PROPERTY = "DOWN_PROPERTY";
 export const DOWN_LIST_VALUE = "DOWN_LIST_VALUE";
 export const LEFT_PROPERTY = "LEFT_PROPERTY";
 export const RIGHT_PROPERTY = "RIGHT_PROPERTY";
+export const DESTROY_POPUP = "DESTROY_POPUP";
 
 export function setPopupInfo() {
     return {
@@ -62,5 +63,11 @@ export function leftProperty() {
 export function rightProperty() {
     return {
         type: RIGHT_PROPERTY
+    }
+}
+
+export function destroy() {
+    return {
+        type: DESTROY_POPUP
     }
 }

@@ -3,7 +3,7 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import KEY from "../../../common/KeyDef";
 import View from '../../View';
-import {setListInfo, setFocus, upList, downList} from "../../actions/ActionMenuList";
+import {setListInfo, setFocus, upList, downList, destroy} from "../../actions/ActionMenuList";
 import Menu from "../comps/Menu";
 
 /**
@@ -20,7 +20,7 @@ class MenuListView extends View {
     componentWillMount() {
         super.componentWillMount();
         this.printLog("called componentWillMount()");
-        this.props.setListInfo(Object.keys(this.props.data).length, 5);
+        this.props.setListInfo(Object.keys(this.props.data).length, 6);
         this.props.setFocus(this.props.is_focus);
     }
 
@@ -38,28 +38,43 @@ class MenuListView extends View {
         return true;
     }
 
-    componentWillUpdate() {
-        this.printLog("called componentWillUpdate()");
+    componentWillUnmount () {
+        this.props.destroy();
     }
+
 
     render() {
         this.printLog("called render()");
         let data = this.props.data;
         let list_info = this.props.list_info;
+        let page_per_item = list_info.page_per_item;
+        let cur_page = list_info.cur_page;
         let menus = [];
-        let conut = 0;
+        let cur_item_idx = 0;
+        let count = 0;
+
         for (let i in data) {
-            let focus = conut === list_info.focused_Index && list_info.is_focus;
-            let select = conut === list_info.selected_index;
-            menus.push(<Menu key={i} name={i} focus={focus} select={select}/>);
-            conut++;
+            if (cur_item_idx === page_per_item) {
+                cur_item_idx = 0;
+            }
+
+            if ( count >= (cur_page - 1) * page_per_item && count < cur_page * page_per_item) {
+                let focus = cur_item_idx === list_info.focused_Index && this.props.is_focus;
+                let select = cur_item_idx === list_info.selected_index && (!this.props.is_focus);
+
+                menus.push(<Menu key={i} name={i} focus={focus} select={select}/>);
+            }
+
+            cur_item_idx++;
+            count++;
         }
+
         let style = {
             position: 'absolute',
             top : '86px',
             background: 'rgb(245, 245, 245)',
             width: '200px',
-            height: '400px',
+            height: '430px',
             borderRadius : '5px'
         };
         return (
@@ -88,7 +103,7 @@ class MenuListView extends View {
                 break;
             case KEY.RIGHT :
                 this.props.setFocus(false);
-                type = TYPE.UNFOCUS
+                type = TYPE.UNFOCUS;
                 break;
         }
 
@@ -128,6 +143,7 @@ let mapDispatchToProps = (dispatch) => {
         setFocus: (is_focus) => dispatch(setFocus(is_focus)),
         upList: () => dispatch(upList()),
         downList: () => dispatch(downList()),
+        destroy: () => dispatch(destroy())
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MenuListView);

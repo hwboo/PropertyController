@@ -7,6 +7,18 @@ import Log from '../utils/Log';
  * @version
  * <p>Copyright (c) 1997-2015 Alticast, Inc. All rights reserved.
  */
+
+
+function copyObj(obj) {
+    var copy = {};
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) {
+            copy[attr] = copyObj(obj[attr]);
+        }
+    }
+    return copy;
+}
+
 class DataManager {
 
     constructor() {
@@ -35,7 +47,7 @@ class DataManager {
         try {
             for (let key in data) {
 
-                let temp = Object.assign({}, data[key], {'PROPERTY' : key});
+                let temp = Object.assign({}, data[key]);
 
                 Log.printLog(this.log_tag, "init() - key : " + key + ", value : " + JSON.stringify(temp));
                 if (!temp.CATEGORY || !temp.TYPE || temp.VALUE === undefined || temp.VALUE === null) {
@@ -43,18 +55,36 @@ class DataManager {
                 }
                 if (!this.menu_map[temp.CATEGORY]) {
                     this.menu_map[temp.CATEGORY] = new Array();
+                    this.origin_properties[temp.CATEGORY] = new Array();
                 }
 
                 if (this.key_array.indexOf(temp.CATEGORY) < 0) {
                     this.key_array[index++] = temp.CATEGORY;
                 }
-                this.menu_map[temp.CATEGORY].push(temp);
+
+                if (temp.TYPE === "List") {
+                    this.menu_map[temp.CATEGORY].push(Object.assign({}, temp, {'PROPERTY' : key, 'VALUE_LIST' : temp.VALUE_LIST.slice()}));
+                    this.origin_properties[temp.CATEGORY].push(Object.assign({}, temp, {'PROPERTY' : key, 'VALUE_LIST' : temp.VALUE_LIST.slice()}));
+                } else {
+                    this.menu_map[temp.CATEGORY].push(Object.assign({}, temp, {'PROPERTY' : key}));
+                    this.origin_properties[temp.CATEGORY].push(Object.assign({}, temp, {'PROPERTY' : key}));
+                }
+
             }
             if (Object.keys(this.menu_map).length > 0) {
                 result = true;
             }
 
-            Object.assign(this.origin_properties, this.menu_map);
+
+            // console.log(this.menu_map);
+            // console.log(this.origin_properties);
+            // this.origin_properties = $.extend(true,{},this.menu_map);
+
+
+            // console.log(this.origin_properties);
+            // this.origin_properties = copyObj(this.menu_map);
+            // this.origin_properties = Object.assign({}, this.menu_map);
+            // this.origin_properties = update(this.menu_map, {$apply: (value) => (value)});
         } catch (e) {
             Log.printLog(this.log_tag, "init() - failed menu data init");
         }
@@ -79,6 +109,7 @@ class DataManager {
     }
 
     setDetailData(args) {
+        // throw new Error();
         let focused_view_Index = args.focused_detail_view_Index;
         let changed_arr = this.menu_map[args.category]; //DEBUG_MODE1 or DEBUG_MODE2가 추출됨.
 
@@ -95,9 +126,24 @@ class DataManager {
         }
     }
 
-    saveProperties() {
+    getProperties() {
+        return this.origin_properties;
+    }
 
-        // 저장이면 menu_map return? 아니면 original_properties return?
+    setProperties() {
+
+        for(let idx in this.origin_properties) { // DEBUG_MODE1, 2
+
+            for(let key in this.origin_properties[idx]) {
+                this.origin_properties[idx][key]["USE"] = this.menu_map[idx][key]["USE"];
+                this.origin_properties[idx][key]["VALUE"] = this.menu_map[idx][key]["VALUE"];
+
+                let type = this.origin_properties[idx][key].TYPE;
+                if (type === "List") {
+                    this.origin_properties[idx][key]["VALUE_LIST"] = this.menu_map[idx][key]["VALUE_LIST"].slice();
+                }
+            }
+        }
     }
 }
 export default new DataManager();

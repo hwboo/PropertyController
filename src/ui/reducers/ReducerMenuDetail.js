@@ -1,5 +1,5 @@
 "use strict";
-import {SET_CONTENTS, UP_CONTENT, DOWN_CONTENT, SET_FOCUS_CONTENT} from '../actions/ActionMenuDetail';
+import {SET_CONTENTS, UP_CONTENT, DOWN_CONTENT, SET_FOCUS_CONTENT, DESTORY_DETAIL_VIEW} from '../actions/ActionMenuDetail';
 
 /**
  * @fileoverview
@@ -46,6 +46,8 @@ export default function (state = initialState, action) {
                 focused_Index: 0,
                 selected_index: 0,
             });
+        case DESTORY_DETAIL_VIEW :
+            return [];
         case UP_CONTENT:
             if(!is_focus) {
                 return state;

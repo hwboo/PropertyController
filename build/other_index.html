@@ -3,24 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Other App</title>
-    <script src="../libs/jquery.min.js" charset="utf-8"></script>
+    <script src="./lib/jquery.min.js" charset="utf-8"></script>
+
     <script>
         var iframe = null;
+
+        // property가 저장된 json파일의 위치(other_index.html을 기준으로 상대경로로 작성)
+        var jsonPath = "../test/test_data.json";
+
         function processMain() {
-            console.log("called processMain()");
-            //iframe 생성
-            iframe = document.createElement("iframe");
-            iframe.setAttribute("id", "PropertyController");
-            iframe.src = "./index.html";
-            iframe.width = 500;
-            iframe.height = 500;
-            document.getElementsByTagName("body")[0].appendChild(iframe);
-            iframe.onload = function () {
-                PC = iframe.contentWindow.PC;
-                PC.Interface.init();
+            $.getJSON(jsonPath, function(data) {
+                console.log("called processMain()");
+                console.log(data)
+                //iframe 생성
+                iframe = document.createElement("iframe");
+                iframe.setAttribute("id", "PropertyController");
+                iframe.setAttribute("scrolling", "no");
+
+                iframe.style.border = 0;
+                iframe.src='./index.html';
+                iframe.width = 1100;
+                iframe.height = 750;
+
+                document.getElementById('property_controller').appendChild(iframe);
+                iframe.onload = function () {
+                    PC = iframe.contentWindow.PC;
+                    PC.Interface.init(data, removeMain);
+                    PC.Interface.setAppMode(PC.Interface.APP_MODE.STB);
+                    PC.Interface.start();
+                }
+            })
+        }
+
+        function removeMain(res_code, data) {
+            console.log('removeMain() called res_code : ' + res_code + ', data : ' + data);
+
+            localStorage.setItem('PROPERTY', JSON.stringify(data));
+
+            var parentDiv = document.getElementById("property_controller");
+
+            while ( parentDiv.hasChildNodes() ) {
+                parentDiv.removeChild( parentDiv.firstChild );
             }
         }
     </script>
+
 </head>
 <body>
 <h1 onclick="processMain()">Main</h1>
@@ -29,5 +56,10 @@
         console.log("Main keydown : " + event);
     });
 </script>
+
+<div id="property_controller" style="position:absolute; z-index:400;"></div>
+
+</div>
+
 </body>
 </html>

@@ -10,6 +10,7 @@ export const UP_LIST = "UP_LIST";
 export const DOWN_LIST = "DOWN_LIST";
 export const SET_LIST_INFO = "SET_LIST";
 export const SET_FOCUS = "SET_FOCUS";
+export const DESTROY_MENU_LIST = "DESTROY_MENU_LIST";
 
 export function setListInfo(total_item, page_per_item) {
     return {
@@ -39,5 +40,11 @@ export function setFocus(is_focus) {
         payload: {
             is_focus: is_focus
         }
+    }
+}
+
+export function destroy() {
+    return {
+        type: DESTROY_MENU_LIST
     }
 }

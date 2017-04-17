@@ -10,6 +10,7 @@ export const UP_CONTENT = "UP_CONTENT";
 export const DOWN_CONTENT = "DOWN_CONTENT";
 export const SET_CONTENTS = "SET_CONTENTS";
 export const SET_FOCUS_CONTENT = "SET_FOCUS_CONTENT";
+export const DESTORY_DETAIL_VIEW = "DESTORY_DETAIL_VIEW";
 
 export function setContents(total_item, page_per_item) {
     return {
@@ -39,5 +40,11 @@ export function setFocusContent(is_focus) {
         payload: {
             is_focus: is_focus
         }
+    }
+}
+
+export function destroy() {
+    return {
+        type: DESTORY_DETAIL_VIEW
     }
 }

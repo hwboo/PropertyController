@@ -12,13 +12,16 @@ class Menu extends Component {
         let div_style = {
             position: 'relative',
             width: '200px',
-            height: '50px',
-            fontSize : '26px',
+            height: '70px',
+            top: '5px',
             textAlign : 'center',
-            paddingTop : '12px'
         };
 
         let span_style = {
+            position: 'absolute',
+            top : '17px',
+            left : '12px',
+            fontSize : '24px',
         };
 
         if(this.props.select) {
@@ -29,6 +32,7 @@ class Menu extends Component {
             span_style.color = 'blue';
             div_style.backgroundColor = 'rgb(176, 224, 230)';
         }
+
         return (
             <div style={div_style}>
                 <span style={span_style}>{this.props.name}</span>

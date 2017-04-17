@@ -3,6 +3,7 @@
 export const SET_INIT = "SET_INIT";
 export const CHANGE_BUTTON = "CHANGE_BUTTON";
 export const SET_SAVE_FOCUS = "SET_SAVE_FOCUS";
+export const DESTROY_SAVE_VIEW = "DESTROY_SAVE_VIEW";
 
 export function setInit() {
     return {
@@ -23,5 +24,11 @@ export function setSaveFocus (is_focus) {
             is_focus : is_focus
         }
 
+    }
+}
+
+export function destroy() {
+    return {
+        type: DESTROY_SAVE_VIEW
     }
 }

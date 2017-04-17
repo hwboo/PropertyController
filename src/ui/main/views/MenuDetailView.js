@@ -3,7 +3,7 @@ import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import KEY from "../../../common/KeyDef";
 import View from '../../View';
-import {setContents, upContent, downContent, setFocusContent} from "../../actions/ActionMenuDetail";
+import {setContents, upContent, downContent, setFocusContent, destroy} from "../../actions/ActionMenuDetail";
 import Content from "../comps/Content";
 import PropertyPopup from "../popup/PropertyPopup";
 import ScrollBar from "../comps/ScrollBar";
@@ -17,7 +17,7 @@ const TYPE = {
 class MenuDetailView extends View {
     componentWillMount() {
         super.componentWillMount();
-        this.props.setContents(Object.keys(this.props.data).length, 5);
+        this.props.setContents(Object.keys(this.props.data).length, 6);
         this.props.setFocusContent(this.is_focus);
     }
 
@@ -30,10 +30,14 @@ class MenuDetailView extends View {
         }
         // MenuDetailView로 focus가 변경되었을 때, MenuDetailView redux의 state를 변경해주어야 한다.
         if(nextProps.data !== this.props.data) {
-            this.props.setContents(Object.keys(nextProps.data).length, 5);
+            this.props.setContents(Object.keys(nextProps.data).length, this.props.properties_info.page_per_item);
         }
 
         return true;
+    }
+
+    componentWillUnmount () {
+        this.props.destroy();
     }
 
     render() {
@@ -46,17 +50,14 @@ class MenuDetailView extends View {
         let count = 0;
 
         for (let i in data) {
-            let focus;
-
             if (cur_item_idx === page_per_item) {
                 cur_item_idx = 0;
             }
 
             if ( count >= (cur_page - 1) * page_per_item && count < cur_page * page_per_item) {
-                focus = cur_item_idx === prop_list_info.focused_Index && this.props.is_focus;
-                let select = cur_item_idx === prop_list_info.selected_index && this.props.is_focus;
+                let focus = cur_item_idx === prop_list_info.focused_Index && this.props.is_focus
 
-                properties.push(<Content key={data[i].PROPERTY} focus={focus} select={select} data={data[i]}/>);
+                properties.push(<Content key={data[i].PROPERTY} focus={focus} data={data[i]}/>);
             }
 
             cur_item_idx++;
@@ -72,7 +73,7 @@ class MenuDetailView extends View {
             top: '86px',
             left: '208px',
             width: '600px',
-            height: '400px',
+            height: '430px',
         };
 
         return (
@@ -152,6 +153,7 @@ let mapDispatchToProps = (dispatch) => {
         setFocusContent: (is_focus) => dispatch(setFocusContent(is_focus)),
         upContent: () => dispatch(upContent()),
         downContent: () => dispatch(downContent()),
+        destroy: () => dispatch(destroy())
     };
 };
 
