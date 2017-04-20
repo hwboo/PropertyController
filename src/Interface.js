@@ -67,6 +67,11 @@ class Interface {
         Config.APP_MODE = app_mode;
     }
 
+    /**
+     * Key event 를 전달한다.
+     *
+     * @param event
+     */
     sendKeyEvent(event) {
         UIManager.handleKeyEvent(event);
     }
