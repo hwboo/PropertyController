@@ -3,6 +3,7 @@ import React, {PropTypes} from "react";
 import Layer from '../../Layer';
 import KEY from '../../../common/KeyDef';
 import TestView from '../views/TestView';
+import TestPopup from '../popups/TestPopup';
 
 /**
  * @fileoverview
@@ -13,18 +14,22 @@ import TestView from '../views/TestView';
 class TestLayer extends Layer {
     constructor(props) {
         super(props);
-        this.view_id = "";
+        this.view_id_1 = "";
+        this.popup_id_1 = "";
     }
 
     componentWillMount() {
         super.componentWillMount();
-        this.view_id = this.addView(TestView);
+        this.view_id_1 = this.addView(TestView);
+        this.view_id_2 = this.addView(TestView);
+        this.popup_id_1 = this.addPopup(TestPopup);
+        this.popup_id_2 = this.addPopup(TestPopup);
     }
 
     render() {
         return (
             <div>
-                TestLayer
+                <h1>TestLayer</h1>
             </div>
         );
     }
