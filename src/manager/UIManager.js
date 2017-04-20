@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import {createStore} from "redux";
 import {Provider} from "react-redux";
 import reducer from "../ui/reducers/Reducers";
+import Config from '../common/Config'
 import Log from "../utils/Log";
 import {getComponentName} from "../utils/Util";
 import Root from "../ui/Root";
@@ -36,18 +37,22 @@ class UIManager {
      */
     start() {
         Log.printLog(this.log_tag, "called start()");
-        window.focus();
         this.store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
         this.addLayer(MainLayer);
         this._render();
-        document.addEventListener("keydown", this.handleKeyEvent);
+        if(Config.APP_MODE == "PC") {
+            window.focus();
+            document.addEventListener("keydown", this.handleKeyEvent);
+        }
     }
 
     /**
      * Destroy UIManager
      */
     destroy() {
-        document.removeEventListener("keydown", this.handleKeyEvent);
+        if(Config.APP_MODE == "PC") {
+            document.removeEventListener("keydown", this.handleKeyEvent);
+        }
     }
 
     /**

@@ -2,6 +2,7 @@
 import Interface from './Interface';
 import TestData from '../test/test_data.json';
 import "babel-polyfill";
+import ConfigJson from '../config.json';
 
 /**
  * @fileoverview
@@ -13,12 +14,12 @@ window.PC = {};
 PC.Interface = Interface;
 
 //TODO [hw.boo] 테스트
-PC.Interface.setLogOutput(true);
-PC.Interface.setAppMode(PC.Interface.APP_MODE.PC);
-PC.Interface.init(TestData, callback);
-PC.Interface.start();
-
-function callback() {
+if(ConfigJson.APP_MODE == "PC") {
+    PC.Interface.setLogOutput(true);
+    PC.Interface.setAppMode(PC.Interface.APP_MODE.PC);
+    PC.Interface.init(TestData, function () {
+    });
+    PC.Interface.start();
 }
 
 
